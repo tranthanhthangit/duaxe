@@ -1,0 +1,29 @@
+{
+  "environment": "PostgreSQL17 Docker local, compiled Node process, synthetic clients",
+  "results": [
+    {
+      "signal": "SIGTERM",
+      "players": 20,
+      "acknowledgedAnswers": 20,
+      "restoredStatus": "paused",
+      "rollbackMetres": 0,
+      "duplicateReward": false
+    },
+    {
+      "signal": "SIGINT",
+      "players": 20,
+      "acknowledgedAnswers": 20,
+      "restoredStatus": "paused",
+      "rollbackMetres": 0,
+      "duplicateReward": false
+    },
+    {
+      "signal": "SIGKILL",
+      "players": 20,
+      "acknowledgedAnswers": 20,
+      "restoredStatus": "paused",
+      "rollbackMetres": 27.799675197000006,
+      "duplicateReward": false
+    }
+  ]
+}

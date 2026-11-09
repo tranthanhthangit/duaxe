@@ -1,0 +1,1665 @@
+{
+  "environment": "Local PostgreSQL17 EXPLAIN ANALYZE; synthetic20 players; all5 mutations ROLLBACK; node times are cumulative, not additive",
+  "plans": [
+    {
+      "planningMs": 1.285,
+      "executionMs": 3.805,
+      "jit": null,
+      "triggers": [
+        {
+          "Trigger Name": "RI_ConstraintTrigger_c_53793",
+          "Constraint Name": "race_answers_room_code_player_id_fkey",
+          "Relation": "race_answers",
+          "Time": 0.329,
+          "Calls": 1
+        },
+        {
+          "Trigger Name": "RI_ConstraintTrigger_c_53798",
+          "Constraint Name": "race_answers_room_code_question_id_fkey",
+          "Relation": "race_answers",
+          "Time": 0.175,
+          "Calls": 1
+        },
+        {
+          "Trigger Name": "RI_ConstraintTrigger_c_53811",
+          "Constraint Name": "command_receipts_room_code_fkey",
+          "Relation": "command_receipts",
+          "Time": 0.062,
+          "Calls": 1
+        }
+      ],
+      "nodes": [
+        {
+          "Node Type": "LockRows",
+          "Subplan Name": "CTE previous",
+          "Actual Total Time": 0.017,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 3,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "Nested Loop",
+          "Subplan Name": "CTE previous_ids",
+          "Actual Total Time": 0.106,
+          "Actual Rows": 20,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 2,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "Function Scan",
+          "Subplan Name": "CTE players",
+          "Actual Total Time": 0.055,
+          "Actual Rows": 20,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 0,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "Nested Loop",
+          "Subplan Name": "CTE incoming_answers",
+          "Actual Total Time": 0.023,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 0,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "Append",
+          "Subplan Name": "CTE incoming_receipts",
+          "Actual Total Time": 0.077,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 0,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "Append",
+          "Subplan Name": "CTE prior_keys",
+          "Actual Total Time": 0,
+          "Actual Rows": 0,
+          "Actual Loops": 0,
+          "Shared Hit Blocks": 0,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "Hash Join",
+          "Subplan Name": "CTE stored_receipts",
+          "Actual Total Time": 0.076,
+          "Actual Rows": 0,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 2,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "CTE Scan",
+          "Subplan Name": "CTE validation",
+          "Actual Total Time": 0.213,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 9,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "Hash Join",
+          "Subplan Name": "InitPlan 8",
+          "Actual Total Time": 0.022,
+          "Actual Rows": 0,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 2,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "Hash Join",
+          "Subplan Name": "InitPlan 9",
+          "Actual Total Time": 0.091,
+          "Actual Rows": 0,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 2,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "ModifyTable",
+          "Operation": "Update",
+          "Relation Name": "race_sessions",
+          "Subplan Name": "CTE saved",
+          "Actual Total Time": 0.603,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 20,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 2
+        },
+        {
+          "Node Type": "ModifyTable",
+          "Operation": "Delete",
+          "Relation Name": "race_players",
+          "Subplan Name": "CTE removed",
+          "Actual Total Time": 0.089,
+          "Actual Rows": 0,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 3,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "CTE Scan",
+          "Subplan Name": "InitPlan 13",
+          "Actual Total Time": 0.001,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 0,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "CTE Scan",
+          "Subplan Name": "SubPlan 12",
+          "Actual Total Time": 0.051,
+          "Actual Rows": 20,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 0,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "ModifyTable",
+          "Operation": "Update",
+          "Relation Name": "race_players",
+          "Subplan Name": "CTE updated",
+          "Actual Total Time": 1.088,
+          "Actual Rows": 20,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 151,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 3
+        },
+        {
+          "Node Type": "CTE Scan",
+          "Subplan Name": "InitPlan 15",
+          "Actual Total Time": 0.002,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 0,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "ModifyTable",
+          "Operation": "Insert",
+          "Relation Name": "race_players",
+          "Subplan Name": "CTE created",
+          "Actual Total Time": 0.134,
+          "Actual Rows": 0,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 2,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "ModifyTable",
+          "Operation": "Insert",
+          "Relation Name": "race_answers",
+          "Subplan Name": "CTE answers",
+          "Actual Total Time": 0.136,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 7,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 3
+        },
+        {
+          "Node Type": "ModifyTable",
+          "Operation": "Insert",
+          "Relation Name": "command_receipts",
+          "Subplan Name": "CTE receipts",
+          "Actual Total Time": 0.098,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 5,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 3
+        },
+        {
+          "Node Type": "CTE Scan",
+          "Subplan Name": "InitPlan 20",
+          "Actual Total Time": 0.22,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 9,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "Aggregate",
+          "Subplan Name": "InitPlan 21",
+          "Actual Total Time": 0.606,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 20,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 2
+        },
+        {
+          "Node Type": "Aggregate",
+          "Subplan Name": "InitPlan 22",
+          "Actual Total Time": 0.089,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 3,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "Aggregate",
+          "Subplan Name": "InitPlan 23",
+          "Actual Total Time": 1.097,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 151,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 3
+        },
+        {
+          "Node Type": "Aggregate",
+          "Subplan Name": "InitPlan 24",
+          "Actual Total Time": 0.135,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 2,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "Aggregate",
+          "Subplan Name": "InitPlan 25",
+          "Actual Total Time": 0.006,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 0,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "Aggregate",
+          "Subplan Name": "InitPlan 26",
+          "Actual Total Time": 0.137,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 7,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 3
+        },
+        {
+          "Node Type": "Aggregate",
+          "Subplan Name": "InitPlan 27",
+          "Actual Total Time": 0.02,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 3,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "Aggregate",
+          "Subplan Name": "InitPlan 28",
+          "Actual Total Time": 0.1,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 5,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 3
+        },
+        {
+          "Node Type": "Aggregate",
+          "Subplan Name": "InitPlan 29",
+          "Actual Total Time": 0.011,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 0,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        }
+      ]
+    },
+    {
+      "planningMs": 1.051,
+      "executionMs": 2.828,
+      "jit": null,
+      "triggers": [
+        {
+          "Trigger Name": "RI_ConstraintTrigger_c_53793",
+          "Constraint Name": "race_answers_room_code_player_id_fkey",
+          "Relation": "race_answers",
+          "Time": 0.082,
+          "Calls": 1
+        },
+        {
+          "Trigger Name": "RI_ConstraintTrigger_c_53798",
+          "Constraint Name": "race_answers_room_code_question_id_fkey",
+          "Relation": "race_answers",
+          "Time": 0.036,
+          "Calls": 1
+        },
+        {
+          "Trigger Name": "RI_ConstraintTrigger_c_53811",
+          "Constraint Name": "command_receipts_room_code_fkey",
+          "Relation": "command_receipts",
+          "Time": 0.032,
+          "Calls": 1
+        }
+      ],
+      "nodes": [
+        {
+          "Node Type": "LockRows",
+          "Subplan Name": "CTE previous",
+          "Actual Total Time": 0.016,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 3,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "Nested Loop",
+          "Subplan Name": "CTE previous_ids",
+          "Actual Total Time": 0.098,
+          "Actual Rows": 20,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 2,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "Function Scan",
+          "Subplan Name": "CTE players",
+          "Actual Total Time": 0.048,
+          "Actual Rows": 20,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 0,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "Nested Loop",
+          "Subplan Name": "CTE incoming_answers",
+          "Actual Total Time": 0.02,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 0,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "Append",
+          "Subplan Name": "CTE incoming_receipts",
+          "Actual Total Time": 0.068,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 0,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "Append",
+          "Subplan Name": "CTE prior_keys",
+          "Actual Total Time": 0,
+          "Actual Rows": 0,
+          "Actual Loops": 0,
+          "Shared Hit Blocks": 0,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "Hash Join",
+          "Subplan Name": "CTE stored_receipts",
+          "Actual Total Time": 0.069,
+          "Actual Rows": 0,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 2,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "CTE Scan",
+          "Subplan Name": "CTE validation",
+          "Actual Total Time": 0.198,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 9,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "Hash Join",
+          "Subplan Name": "InitPlan 8",
+          "Actual Total Time": 0.021,
+          "Actual Rows": 0,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 2,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "Hash Join",
+          "Subplan Name": "InitPlan 9",
+          "Actual Total Time": 0.079,
+          "Actual Rows": 0,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 2,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "ModifyTable",
+          "Operation": "Update",
+          "Relation Name": "race_sessions",
+          "Subplan Name": "CTE saved",
+          "Actual Total Time": 0.57,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 17,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "ModifyTable",
+          "Operation": "Delete",
+          "Relation Name": "race_players",
+          "Subplan Name": "CTE removed",
+          "Actual Total Time": 0.137,
+          "Actual Rows": 0,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 6,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "CTE Scan",
+          "Subplan Name": "InitPlan 13",
+          "Actual Total Time": 0,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 0,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "CTE Scan",
+          "Subplan Name": "SubPlan 12",
+          "Actual Total Time": 0.044,
+          "Actual Rows": 20,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 0,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "ModifyTable",
+          "Operation": "Update",
+          "Relation Name": "race_players",
+          "Subplan Name": "CTE updated",
+          "Actual Total Time": 0.848,
+          "Actual Rows": 20,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 170,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 2
+        },
+        {
+          "Node Type": "CTE Scan",
+          "Subplan Name": "InitPlan 15",
+          "Actual Total Time": 0,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 0,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "ModifyTable",
+          "Operation": "Insert",
+          "Relation Name": "race_players",
+          "Subplan Name": "CTE created",
+          "Actual Total Time": 0.121,
+          "Actual Rows": 0,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 2,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "ModifyTable",
+          "Operation": "Insert",
+          "Relation Name": "race_answers",
+          "Subplan Name": "CTE answers",
+          "Actual Total Time": 0.085,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 7,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "ModifyTable",
+          "Operation": "Insert",
+          "Relation Name": "command_receipts",
+          "Subplan Name": "CTE receipts",
+          "Actual Total Time": 0.058,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 5,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "CTE Scan",
+          "Subplan Name": "InitPlan 20",
+          "Actual Total Time": 0.204,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 9,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "Aggregate",
+          "Subplan Name": "InitPlan 21",
+          "Actual Total Time": 0.573,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 17,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "Aggregate",
+          "Subplan Name": "InitPlan 22",
+          "Actual Total Time": 0.137,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 6,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "Aggregate",
+          "Subplan Name": "InitPlan 23",
+          "Actual Total Time": 0.856,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 170,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 2
+        },
+        {
+          "Node Type": "Aggregate",
+          "Subplan Name": "InitPlan 24",
+          "Actual Total Time": 0.121,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 2,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "Aggregate",
+          "Subplan Name": "InitPlan 25",
+          "Actual Total Time": 0.005,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 0,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "Aggregate",
+          "Subplan Name": "InitPlan 26",
+          "Actual Total Time": 0.085,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 7,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "Aggregate",
+          "Subplan Name": "InitPlan 27",
+          "Actual Total Time": 0.018,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 2,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "Aggregate",
+          "Subplan Name": "InitPlan 28",
+          "Actual Total Time": 0.059,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 5,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "Aggregate",
+          "Subplan Name": "InitPlan 29",
+          "Actual Total Time": 0.012,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 0,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        }
+      ]
+    },
+    {
+      "planningMs": 0.899,
+      "executionMs": 3.032,
+      "jit": null,
+      "triggers": [
+        {
+          "Trigger Name": "RI_ConstraintTrigger_c_53793",
+          "Constraint Name": "race_answers_room_code_player_id_fkey",
+          "Relation": "race_answers",
+          "Time": 0.079,
+          "Calls": 1
+        },
+        {
+          "Trigger Name": "RI_ConstraintTrigger_c_53798",
+          "Constraint Name": "race_answers_room_code_question_id_fkey",
+          "Relation": "race_answers",
+          "Time": 0.035,
+          "Calls": 1
+        },
+        {
+          "Trigger Name": "RI_ConstraintTrigger_c_53811",
+          "Constraint Name": "command_receipts_room_code_fkey",
+          "Relation": "command_receipts",
+          "Time": 0.031,
+          "Calls": 1
+        }
+      ],
+      "nodes": [
+        {
+          "Node Type": "LockRows",
+          "Subplan Name": "CTE previous",
+          "Actual Total Time": 0.017,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 3,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "Nested Loop",
+          "Subplan Name": "CTE previous_ids",
+          "Actual Total Time": 0.091,
+          "Actual Rows": 20,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 2,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "Function Scan",
+          "Subplan Name": "CTE players",
+          "Actual Total Time": 0.043,
+          "Actual Rows": 20,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 0,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "Nested Loop",
+          "Subplan Name": "CTE incoming_answers",
+          "Actual Total Time": 0.019,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 0,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "Append",
+          "Subplan Name": "CTE incoming_receipts",
+          "Actual Total Time": 0.058,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 0,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "Append",
+          "Subplan Name": "CTE prior_keys",
+          "Actual Total Time": 0,
+          "Actual Rows": 0,
+          "Actual Loops": 0,
+          "Shared Hit Blocks": 0,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "Hash Join",
+          "Subplan Name": "CTE stored_receipts",
+          "Actual Total Time": 0.057,
+          "Actual Rows": 0,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 2,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "CTE Scan",
+          "Subplan Name": "CTE validation",
+          "Actual Total Time": 0.176,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 9,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "Hash Join",
+          "Subplan Name": "InitPlan 8",
+          "Actual Total Time": 0.016,
+          "Actual Rows": 0,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 2,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "Hash Join",
+          "Subplan Name": "InitPlan 9",
+          "Actual Total Time": 0.066,
+          "Actual Rows": 0,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 2,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "ModifyTable",
+          "Operation": "Update",
+          "Relation Name": "race_sessions",
+          "Subplan Name": "CTE saved",
+          "Actual Total Time": 0.564,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 19,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 1
+        },
+        {
+          "Node Type": "ModifyTable",
+          "Operation": "Delete",
+          "Relation Name": "race_players",
+          "Subplan Name": "CTE removed",
+          "Actual Total Time": 0.077,
+          "Actual Rows": 0,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 8,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "CTE Scan",
+          "Subplan Name": "InitPlan 13",
+          "Actual Total Time": 0,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 0,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "CTE Scan",
+          "Subplan Name": "SubPlan 12",
+          "Actual Total Time": 0.041,
+          "Actual Rows": 20,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 0,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "ModifyTable",
+          "Operation": "Update",
+          "Relation Name": "race_players",
+          "Subplan Name": "CTE updated",
+          "Actual Total Time": 0.93,
+          "Actual Rows": 20,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 172,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 2
+        },
+        {
+          "Node Type": "CTE Scan",
+          "Subplan Name": "InitPlan 15",
+          "Actual Total Time": 0,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 0,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "ModifyTable",
+          "Operation": "Insert",
+          "Relation Name": "race_players",
+          "Subplan Name": "CTE created",
+          "Actual Total Time": 0.114,
+          "Actual Rows": 0,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 2,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "ModifyTable",
+          "Operation": "Insert",
+          "Relation Name": "race_answers",
+          "Subplan Name": "CTE answers",
+          "Actual Total Time": 0.116,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 7,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "ModifyTable",
+          "Operation": "Insert",
+          "Relation Name": "command_receipts",
+          "Subplan Name": "CTE receipts",
+          "Actual Total Time": 0.058,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 5,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "CTE Scan",
+          "Subplan Name": "InitPlan 20",
+          "Actual Total Time": 0.183,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 9,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "Aggregate",
+          "Subplan Name": "InitPlan 21",
+          "Actual Total Time": 0.567,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 19,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 1
+        },
+        {
+          "Node Type": "Aggregate",
+          "Subplan Name": "InitPlan 22",
+          "Actual Total Time": 0.077,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 8,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "Aggregate",
+          "Subplan Name": "InitPlan 23",
+          "Actual Total Time": 0.939,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 172,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 2
+        },
+        {
+          "Node Type": "Aggregate",
+          "Subplan Name": "InitPlan 24",
+          "Actual Total Time": 0.115,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 2,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "Aggregate",
+          "Subplan Name": "InitPlan 25",
+          "Actual Total Time": 0.005,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 0,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "Aggregate",
+          "Subplan Name": "InitPlan 26",
+          "Actual Total Time": 0.117,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 7,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "Aggregate",
+          "Subplan Name": "InitPlan 27",
+          "Actual Total Time": 0.013,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 2,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "Aggregate",
+          "Subplan Name": "InitPlan 28",
+          "Actual Total Time": 0.059,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 5,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "Aggregate",
+          "Subplan Name": "InitPlan 29",
+          "Actual Total Time": 0.009,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 0,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        }
+      ]
+    },
+    {
+      "planningMs": 0.902,
+      "executionMs": 3.269,
+      "jit": null,
+      "triggers": [
+        {
+          "Trigger Name": "RI_ConstraintTrigger_c_53793",
+          "Constraint Name": "race_answers_room_code_player_id_fkey",
+          "Relation": "race_answers",
+          "Time": 0.135,
+          "Calls": 1
+        },
+        {
+          "Trigger Name": "RI_ConstraintTrigger_c_53798",
+          "Constraint Name": "race_answers_room_code_question_id_fkey",
+          "Relation": "race_answers",
+          "Time": 0.054,
+          "Calls": 1
+        },
+        {
+          "Trigger Name": "RI_ConstraintTrigger_c_53811",
+          "Constraint Name": "command_receipts_room_code_fkey",
+          "Relation": "command_receipts",
+          "Time": 0.037,
+          "Calls": 1
+        }
+      ],
+      "nodes": [
+        {
+          "Node Type": "LockRows",
+          "Subplan Name": "CTE previous",
+          "Actual Total Time": 0.017,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 3,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "Nested Loop",
+          "Subplan Name": "CTE previous_ids",
+          "Actual Total Time": 0.097,
+          "Actual Rows": 20,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 2,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "Function Scan",
+          "Subplan Name": "CTE players",
+          "Actual Total Time": 0.044,
+          "Actual Rows": 20,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 0,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "Nested Loop",
+          "Subplan Name": "CTE incoming_answers",
+          "Actual Total Time": 0.02,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 0,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "Append",
+          "Subplan Name": "CTE incoming_receipts",
+          "Actual Total Time": 0.061,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 0,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "Append",
+          "Subplan Name": "CTE prior_keys",
+          "Actual Total Time": 0,
+          "Actual Rows": 0,
+          "Actual Loops": 0,
+          "Shared Hit Blocks": 0,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "Hash Join",
+          "Subplan Name": "CTE stored_receipts",
+          "Actual Total Time": 0.059,
+          "Actual Rows": 0,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 2,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "CTE Scan",
+          "Subplan Name": "CTE validation",
+          "Actual Total Time": 0.176,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 9,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "Hash Join",
+          "Subplan Name": "InitPlan 8",
+          "Actual Total Time": 0.016,
+          "Actual Rows": 0,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 2,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "Hash Join",
+          "Subplan Name": "InitPlan 9",
+          "Actual Total Time": 0.068,
+          "Actual Rows": 0,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 2,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "ModifyTable",
+          "Operation": "Update",
+          "Relation Name": "race_sessions",
+          "Subplan Name": "CTE saved",
+          "Actual Total Time": 0.603,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 23,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 3
+        },
+        {
+          "Node Type": "ModifyTable",
+          "Operation": "Delete",
+          "Relation Name": "race_players",
+          "Subplan Name": "CTE removed",
+          "Actual Total Time": 0.077,
+          "Actual Rows": 0,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 10,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "CTE Scan",
+          "Subplan Name": "InitPlan 13",
+          "Actual Total Time": 0,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 0,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "CTE Scan",
+          "Subplan Name": "SubPlan 12",
+          "Actual Total Time": 0.04,
+          "Actual Rows": 20,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 0,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "ModifyTable",
+          "Operation": "Update",
+          "Relation Name": "race_players",
+          "Subplan Name": "CTE updated",
+          "Actual Total Time": 1.211,
+          "Actual Rows": 20,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 174,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 2
+        },
+        {
+          "Node Type": "CTE Scan",
+          "Subplan Name": "InitPlan 15",
+          "Actual Total Time": 0,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 0,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "ModifyTable",
+          "Operation": "Insert",
+          "Relation Name": "race_players",
+          "Subplan Name": "CTE created",
+          "Actual Total Time": 0.12,
+          "Actual Rows": 0,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 2,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "ModifyTable",
+          "Operation": "Insert",
+          "Relation Name": "race_answers",
+          "Subplan Name": "CTE answers",
+          "Actual Total Time": 0.076,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 7,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "ModifyTable",
+          "Operation": "Insert",
+          "Relation Name": "command_receipts",
+          "Subplan Name": "CTE receipts",
+          "Actual Total Time": 0.058,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 5,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "CTE Scan",
+          "Subplan Name": "InitPlan 20",
+          "Actual Total Time": 0.183,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 9,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "Aggregate",
+          "Subplan Name": "InitPlan 21",
+          "Actual Total Time": 0.605,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 23,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 3
+        },
+        {
+          "Node Type": "Aggregate",
+          "Subplan Name": "InitPlan 22",
+          "Actual Total Time": 0.077,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 10,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "Aggregate",
+          "Subplan Name": "InitPlan 23",
+          "Actual Total Time": 1.219,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 174,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 2
+        },
+        {
+          "Node Type": "Aggregate",
+          "Subplan Name": "InitPlan 24",
+          "Actual Total Time": 0.12,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 2,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "Aggregate",
+          "Subplan Name": "InitPlan 25",
+          "Actual Total Time": 0.005,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 0,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "Aggregate",
+          "Subplan Name": "InitPlan 26",
+          "Actual Total Time": 0.076,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 7,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "Aggregate",
+          "Subplan Name": "InitPlan 27",
+          "Actual Total Time": 0.013,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 2,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "Aggregate",
+          "Subplan Name": "InitPlan 28",
+          "Actual Total Time": 0.058,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 5,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "Aggregate",
+          "Subplan Name": "InitPlan 29",
+          "Actual Total Time": 0.008,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 0,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        }
+      ]
+    },
+    {
+      "planningMs": 0.889,
+      "executionMs": 2.577,
+      "jit": null,
+      "triggers": [
+        {
+          "Trigger Name": "RI_ConstraintTrigger_c_53793",
+          "Constraint Name": "race_answers_room_code_player_id_fkey",
+          "Relation": "race_answers",
+          "Time": 0.078,
+          "Calls": 1
+        },
+        {
+          "Trigger Name": "RI_ConstraintTrigger_c_53798",
+          "Constraint Name": "race_answers_room_code_question_id_fkey",
+          "Relation": "race_answers",
+          "Time": 0.036,
+          "Calls": 1
+        },
+        {
+          "Trigger Name": "RI_ConstraintTrigger_c_53811",
+          "Constraint Name": "command_receipts_room_code_fkey",
+          "Relation": "command_receipts",
+          "Time": 0.063,
+          "Calls": 1
+        }
+      ],
+      "nodes": [
+        {
+          "Node Type": "LockRows",
+          "Subplan Name": "CTE previous",
+          "Actual Total Time": 0.023,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 5,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "Nested Loop",
+          "Subplan Name": "CTE previous_ids",
+          "Actual Total Time": 0.091,
+          "Actual Rows": 20,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 2,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "Function Scan",
+          "Subplan Name": "CTE players",
+          "Actual Total Time": 0.043,
+          "Actual Rows": 20,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 0,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "Nested Loop",
+          "Subplan Name": "CTE incoming_answers",
+          "Actual Total Time": 0.019,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 0,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "Append",
+          "Subplan Name": "CTE incoming_receipts",
+          "Actual Total Time": 0.061,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 0,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "Append",
+          "Subplan Name": "CTE prior_keys",
+          "Actual Total Time": 0,
+          "Actual Rows": 0,
+          "Actual Loops": 0,
+          "Shared Hit Blocks": 0,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "Hash Join",
+          "Subplan Name": "CTE stored_receipts",
+          "Actual Total Time": 0.059,
+          "Actual Rows": 0,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 2,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "CTE Scan",
+          "Subplan Name": "CTE validation",
+          "Actual Total Time": 0.178,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 11,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "Hash Join",
+          "Subplan Name": "InitPlan 8",
+          "Actual Total Time": 0.019,
+          "Actual Rows": 0,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 2,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "Hash Join",
+          "Subplan Name": "InitPlan 9",
+          "Actual Total Time": 0.066,
+          "Actual Rows": 0,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 2,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "ModifyTable",
+          "Operation": "Update",
+          "Relation Name": "race_sessions",
+          "Subplan Name": "CTE saved",
+          "Actual Total Time": 0.511,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 17,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "ModifyTable",
+          "Operation": "Delete",
+          "Relation Name": "race_players",
+          "Subplan Name": "CTE removed",
+          "Actual Total Time": 0.078,
+          "Actual Rows": 0,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 12,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "CTE Scan",
+          "Subplan Name": "InitPlan 13",
+          "Actual Total Time": 0,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 0,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "CTE Scan",
+          "Subplan Name": "SubPlan 12",
+          "Actual Total Time": 0.039,
+          "Actual Rows": 20,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 0,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "ModifyTable",
+          "Operation": "Update",
+          "Relation Name": "race_players",
+          "Subplan Name": "CTE updated",
+          "Actual Total Time": 0.742,
+          "Actual Rows": 20,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 176,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 2
+        },
+        {
+          "Node Type": "CTE Scan",
+          "Subplan Name": "InitPlan 15",
+          "Actual Total Time": 0,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 0,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "ModifyTable",
+          "Operation": "Insert",
+          "Relation Name": "race_players",
+          "Subplan Name": "CTE created",
+          "Actual Total Time": 0.111,
+          "Actual Rows": 0,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 2,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "ModifyTable",
+          "Operation": "Insert",
+          "Relation Name": "race_answers",
+          "Subplan Name": "CTE answers",
+          "Actual Total Time": 0.076,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 7,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "ModifyTable",
+          "Operation": "Insert",
+          "Relation Name": "command_receipts",
+          "Subplan Name": "CTE receipts",
+          "Actual Total Time": 0.053,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 5,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "CTE Scan",
+          "Subplan Name": "InitPlan 20",
+          "Actual Total Time": 0.184,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 11,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "Aggregate",
+          "Subplan Name": "InitPlan 21",
+          "Actual Total Time": 0.516,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 17,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "Aggregate",
+          "Subplan Name": "InitPlan 22",
+          "Actual Total Time": 0.079,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 12,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "Aggregate",
+          "Subplan Name": "InitPlan 23",
+          "Actual Total Time": 0.749,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 176,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 2
+        },
+        {
+          "Node Type": "Aggregate",
+          "Subplan Name": "InitPlan 24",
+          "Actual Total Time": 0.112,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 2,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "Aggregate",
+          "Subplan Name": "InitPlan 25",
+          "Actual Total Time": 0.006,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 0,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "Aggregate",
+          "Subplan Name": "InitPlan 26",
+          "Actual Total Time": 0.076,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 7,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "Aggregate",
+          "Subplan Name": "InitPlan 27",
+          "Actual Total Time": 0.014,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 2,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "Aggregate",
+          "Subplan Name": "InitPlan 28",
+          "Actual Total Time": 0.054,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 5,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "Aggregate",
+          "Subplan Name": "InitPlan 29",
+          "Actual Total Time": 0.009,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 0,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        }
+      ]
+    }
+  ]
+}

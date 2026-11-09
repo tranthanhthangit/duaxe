@@ -1,0 +1,19 @@
+{
+  "baselineTests": 36,
+  "currentTests": 57,
+  "modifiedBaselineFiles": [
+    "server/Room.ts",
+    "server/app.ts",
+    "server/index.ts",
+    "server/classroom/api.ts",
+    "server/sessions/SessionStore.ts",
+    "tests/server.test.ts",
+    "tests/sessions.test.ts",
+    "scripts/persistence-smoke.ts",
+    "scripts/readiness-network.ts",
+    ".gitignore"
+  ],
+  "frontendAndSharedUnchanged": true,
+  "raceModelUnchanged": true,
+  "sqliteStoreAndMigrationsUnchanged": true
+}

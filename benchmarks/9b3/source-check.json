@@ -1,0 +1,39 @@
+{
+  "scope": "Compared with task-start SHA256 snapshot, not git diff; original source was untracked",
+  "originalFiles": 296,
+  "modifiedOriginalFiles": [
+    ".env.example",
+    "package.json",
+    "render.yaml",
+    "SUPABASE_AUTH_PRODUCTION_MIGRATION.md",
+    "tests/teacher-signup.test.ts",
+    "scripts/cloud/browser.ts",
+    "scripts/cloud/persistence.ts",
+    "scripts/cloud/preflight.ts",
+    "scripts/cloud/signup-browser.ts",
+    "server/classroom/api.ts",
+    "server/cloud/TeacherAuth.ts",
+    "server/cloud/TeacherSignup.ts",
+    "server/storage/contracts.ts",
+    "server/storage/factory.ts",
+    "src/classroom/api.ts",
+    "src/classroom/TeacherLogin.tsx",
+    "src/classroom/AuthChallenge.tsx"
+  ],
+  "createdSourceOrDocs": [
+    "MIGRATION_REVIEW_9B3.md",
+    "SUPABASE_PRODUCTION_VALIDATION_9B3.md",
+    "scripts/cloud/migration-review.ts",
+    "server/cloud/Turnstile.ts",
+    "tests/turnstile.test.ts",
+    "tests/migration-review.test.ts",
+    "tests/helpers/turnstile-preload.mjs"
+  ],
+  "protectedFilesCompared": 181,
+  "protectedViolations": [],
+  "originalBenchmarksUnchanged": true,
+  "sql001to004Unchanged": true,
+  "sqliteAndOriginalPhotos": "No operations against original paths; fixtures use disposable loopback databases and temporary copies",
+  "productionMigrationOrWrites": false,
+  "gitCommitOrPublish": false
+}

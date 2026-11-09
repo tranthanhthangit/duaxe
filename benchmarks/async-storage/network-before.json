@@ -1,0 +1,33 @@
+{
+  "environment": "Loopback simulated 20 clients, one Node process, SQLite FULL; forced transport closure on 3 clients; reconnectDelay 100ms",
+  "answerRttMs": {
+    "samples": 60,
+    "median": 33.587852,
+    "p95": 34.262852000000066,
+    "p99": 34.36289099999999
+  },
+  "laneRttMs": {
+    "samples": 200,
+    "median": 33.8677009999999,
+    "p95": 76.09517399999982,
+    "p99": 76.13292200000001
+  },
+  "rankingFrameGapMs": {
+    "samples": 45,
+    "median": 99.91053299999999,
+    "p95": 102.95971199999985,
+    "p99": 134.461006
+  },
+  "firstSimultaneousAnswersToTeacherFrameMs": 89.20652300000006,
+  "disconnects": 3,
+  "unplannedDisconnects": 0,
+  "reconnectMs": {
+    "samples": 3,
+    "median": 112.21870000000035,
+    "p95": 115.09880900000007,
+    "p99": 115.09880900000007
+  },
+  "sentBytesPerSecond": 1081729.764159233,
+  "receivedBytesPerSecond": 4184.373267581965,
+  "durationSeconds": 4.121286247
+}

@@ -1,0 +1,35 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { mkdtempSync,rmSync,readFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { once } from 'node:events';
+import { io,type Socket } from 'socket.io-client';
+import { ClassroomStore } from '../server/classroom/Store';
+import { SessionStore } from '../server/sessions/SessionStore';
+import { createGameServer } from '../server/app';
+import { defaultSet } from '../src/questions/model';
+import type { Credential,Reply } from '../shared/protocol';
+test('20-player durable restart: tokens, answers, deadline, lanes, claims, history scope and corruption',async()=>{
+ const dir=mkdtempSync(join(tmpdir(),'race-sessions-')),path=join(dir,'db.sqlite'),avatars=join(dir,'avatars');let store=new ClassroomStore(path,avatars);const owner=store.createTeacher('one@example.test','one-test-password'),other=store.createTeacher('two@example.test','two-test-password'),cls=store.saveClass(owner,{name:'Lá'}),ids=Array.from({length:20},(_,i)=>store.saveStudent(owner,{classId:cls,fullName:'Bé '+i,displayName:'Bé '+i}));const cookie='teacher_session='+store.login('one@example.test','one-test-password');let server=createGameServer({origins:['http://test.local'],store,autoTick:false});const clients:Socket[]=[];
+ async function listen(){server.http.listen(0,'127.0.0.1');await once(server.http,'listening');await server.ready;const a=server.http.address();assert.ok(a&&typeof a==='object');return 'http://127.0.0.1:'+a.port;}let url=await listen();
+ async function connect(cookie=''){const s=io(url,{autoConnect:false,transports:['websocket'],extraHeaders:{Cookie:cookie},reconnection:false});clients.push(s);const ready=new Promise<void>(resolve=>s.once('connect',resolve));s.connect();await ready;return s;}
+ async function ask<T>(s:Socket,payload:unknown){return new Promise<T>((resolve,reject)=>s.timeout(3000).emit('request',payload,(e:Error|null,r:Reply<T>)=>e||!r.ok?reject(e||new Error(r.ok?'':r.error)):resolve(r.data)));}
+ try{let teacher=await connect(cookie);const auth=await ask<Credential>(teacher,{type:'create',set:defaultSet,classId:cls,studentIds:ids});const students=await Promise.all(ids.map(()=>connect()));const auths=await Promise.all(students.map((s,i)=>ask<Credential>(s,{type:'claim',code:auth.code,studentId:ids[i],color:i})));
+ await ask(teacher,{type:'control',action:'start'});await Promise.all(students.map(s=>ask(s,{type:'answer',questionId:'sun',optionId:'morning',commandId:'answer-000001'})));await ask(students[0],{type:'next',questionId:'sun'});await ask(students[0],{type:'lane',direction:1});const room=server.rooms.get(auth.code)!;for(let i=0;i<30;i++)room.tick(.05);new SessionStore(store).save(room);const before=room.checkpoint();
+ await server.close();store.close();store=new ClassroomStore(path,avatars);server=createGameServer({origins:['http://test.local'],store,autoTick:false});url=await listen();const restored=server.rooms.get(auth.code)!;assert.equal(restored.status,'paused');assert.equal(restored.players.size,20);assert.ok(restored.elapsed>=before.elapsed&&restored.elapsed<before.elapsed+.25);assert.equal(restored.student(auths[0].playerId).quiz.index,1);assert.equal(restored.student(auths[0].playerId).race.cars[0].lane,before.players[0].race.cars[0].lane);
+ teacher=await connect();await ask(teacher,{type:'resume',credential:auth});const student=await connect();await ask(student,{type:'resume',credential:auths[0]});await ask(student,{type:'answer',questionId:'sun',optionId:'morning',commandId:'answer-000001'});assert.equal(restored.student(auths[0].playerId).quiz.results.length,1);assert.equal(restored.student(auths[0].playerId).quiz.totals.correct,1);await assert.rejects(ask(student,{type:'answer',questionId:'legs',optionId:'four'}));const intruder=await connect();await assert.rejects(ask(intruder,{type:'claim',code:auth.code,studentId:ids[0],color:1}));await assert.rejects(ask(intruder,{type:'recoverTeacher',code:auth.code}));
+ await ask(teacher,{type:'control',action:'resume'});await ask(student,{type:'answer',questionId:'legs',optionId:'four'});await assert.rejects(ask(student,{type:'answer',questionId:'legs',optionId:'four'}));await ask(teacher,{type:'control',action:'end'});const history=new SessionStore(store);assert.equal(history.report(owner,auth.code).players.length,20);assert.throws(()=>history.report(other,auth.code));assert.throws(()=>history.delete(other,auth.code));assert.equal(history.list(owner,cls,'','').length,1);
+ const anonymous=await fetch(url+'/api/history');assert.equal(anonymous.status,401);const response=await fetch(url+'/api/history/'+auth.code,{headers:{Cookie:cookie}});assert.equal(response.status,200);assert.equal(JSON.stringify(await response.json()).includes('digest'),false);
+ const disk=store.db.prepare('SELECT checkpoint FROM race_sessions').get()!.checkpoint as string;for(const c of [auth,...auths])assert.equal(disk.includes(c.token),false);assert.equal(disk.includes('avatarData'),false);
+ history.delete(owner,auth.code);assert.equal(store.db.prepare('SELECT COUNT(*) n FROM race_answers').get()!.n,0);assert.equal(store.students(owner,cls).length,20);
+ history.save(restored);store.db.prepare("UPDATE race_sessions SET status='running',checkpoint='{}'").run();assert.equal(history.load().length,0);assert.equal(store.db.prepare('SELECT status FROM race_sessions').get()!.status,'corrupt');store.db.prepare("UPDATE race_sessions SET report='{'").run();const deleted=await fetch(url+'/api/history/'+auth.code,{method:'DELETE',headers:{Cookie:cookie,'X-Classroom-Request':'1'}});assert.equal(deleted.status,200);assert.equal(store.db.prepare('SELECT COUNT(*) n FROM race_sessions').get()!.n,0);
+ }finally{clients.forEach(s=>s.disconnect());await server.close();store.close();rmSync(dir,{recursive:true,force:true});}
+});
+
+test('migration 1 -> 2 preserves existing teacher, classroom, student and private avatar bytes',async()=>{
+ const dir=mkdtempSync(join(tmpdir(),'migration-session-')),path=join(dir,'old.sqlite'),avatars=join(dir,'avatars');let store=new ClassroomStore(path,avatars);
+ try{const sharp=(await import('sharp')).default,owner=store.createTeacher('migration@example.test','migration-test-password'),cls=store.saveClass(owner,{name:'Lớp đang dùng'}),student=store.saveStudent(owner,{classId:cls,fullName:'An',displayName:'An'}),id=await store.upload(owner,student,await sharp({create:{width:128,height:128,channels:3,background:'green'}}).png().toBuffer()),bytes=store.avatar(owner,id);
+ store.db.exec('DROP TABLE race_answers;DROP TABLE race_players;DROP TABLE race_sessions;PRAGMA user_version=1;');store.close();store=new ClassroomStore(path,avatars);assert.equal(store.db.prepare('PRAGMA user_version').get()!.user_version,2);assert.equal(store.student(owner,student).avatarId,id);assert.deepEqual(store.avatar(owner,id),bytes);assert.equal(store.classes(owner)[0].name,'Lớp đang dùng');assert.ok(store.login('migration@example.test','migration-test-password'));
+ }finally{store.close();rmSync(dir,{recursive:true,force:true});}
+});

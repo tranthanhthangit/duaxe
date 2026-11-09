@@ -1,0 +1,16 @@
+{
+  "environment": "Headless Chromium on cloud, Vite dev, loopback, 1 teacher + 1 mobile browser + 19 Socket.IO clients",
+  "durationSeconds": 8,
+  "rafFps": 42.94730552339695,
+  "frameP95": 33.400000000001455,
+  "renderer": {
+    "fps": 42.66587782199228,
+    "frameP95": 30.009999999999856,
+    "cars": 20,
+    "textures": 43
+  },
+  "teacherHeapBeforeMiB": 39.20750045776367,
+  "teacherHeapAfterMiB": 40.05104446411133,
+  "answerRttMedianMs": 30.161160999996355,
+  "answerRttP95Ms": 52.59446999999636
+}

@@ -1,0 +1,61 @@
+{
+  "asOf": "2026-11-07",
+  "productionOverall": "BLOCKED",
+  "productionMutations": 0,
+  "appliedMigrations": [],
+  "productionDeployments": 0,
+  "localChecks": {
+    "typescript": "PASS",
+    "frontendBackendBuild": "PASS",
+    "pagesFunctionsCompile": "PASS",
+    "pagesBuildSyntheticPublicConfig": "PASS",
+    "unitAssertions": {
+      "total": 98,
+      "pass": 98,
+      "fail": 0,
+      "skip": 0,
+      "scope": "Local regression suite includes mock providers; NOT production acceptance"
+    },
+    "chromiumSignupAndRecovery": {
+      "productionStatus": "NOT TESTED",
+      "localAssertionsCompleted": true,
+      "provider": "emulated"
+    },
+    "compiledServerCrash": {
+      "productionStatus": "NOT TESTED",
+      "localAssertionsCompleted": true,
+      "postgres": "native loopback PostgreSQL17",
+      "authStorageTurnstile": "emulated",
+      "signals": [
+        "SIGTERM",
+        "SIGINT",
+        "SIGKILL"
+      ],
+      "clientsPerSignal": 20
+    },
+    "nativePostgresNetwork": {
+      "status": "PASS",
+      "scope": "Local PostgreSQL only; no hosted Auth/Render/Pages acceptance",
+      "clients": 20,
+      "reconnects": 3
+    }
+  },
+  "productionChecks": {
+    "migrationMetadata": "BLOCKED",
+    "migrationApply": "NEEDS APPROVAL",
+    "smtp": "BLOCKED",
+    "turnstile": "BLOCKED",
+    "redirects": "BLOCKED",
+    "bucketMetadata": "BLOCKED",
+    "hostedSelfSignup": "NOT TESTED",
+    "twentyCloudClients": "NOT TESTED",
+    "twentyPhysicalDevices": "NOT TESTED",
+    "publicOpening": "NEEDS APPROVAL"
+  },
+  "notes": [
+    "No production mock scenario is marked PASS.",
+    "Cloud provider metadata is in provider-readonly.json.",
+    "SIGKILL can roll back vehicle distance to checkpoint while acknowledged answers remain durable.",
+    "Original SQLite, photos and game/race/protocol source were not modified."
+  ]
+}

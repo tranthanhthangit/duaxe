@@ -1,0 +1,49 @@
+{
+  "environment": "PostgreSQL17 local Docker; PG_TEST_URL configured for isolated synthetic databases",
+  "commands": [
+    {
+      "command": "npm run typecheck",
+      "exitCode": 0
+    },
+    {
+      "command": "npm test",
+      "exitCode": 0
+    },
+    {
+      "command": "npm run build",
+      "exitCode": 0
+    },
+    {
+      "command": "npm run test:postgres-signals",
+      "exitCode": 0
+    },
+    {
+      "command": "npm run profile:postgres-sql",
+      "exitCode": 0
+    },
+    {
+      "command": "npm run check:postgres-staging",
+      "exitCode": 0
+    },
+    {
+      "command": "npm run test:postgres-migration",
+      "exitCode": 0
+    }
+  ],
+  "tests": {
+    "pass": 72,
+    "skip": 0,
+    "fail": 0
+  },
+  "postgresSuite": {
+    "pass": 15,
+    "skip": 0,
+    "fail": 0
+  },
+  "staging": {
+    "status": "skipped",
+    "reason": "No PG_STAGING_URL credentials configured; no remote connection attempted"
+  },
+  "testContainerCleanedUp": true,
+  "productionActions": 0
+}

@@ -1,0 +1,25 @@
+{
+  "environment": "Headless Chromium on cloud, Vite dev, loopback, 1 teacher + 1 mobile browser + 19 Socket.IO clients",
+  "durationSeconds": 8,
+  "rafFps": 44.939624050790485,
+  "frameP95": 33.400000000001455,
+  "renderer": {
+    "fps": 45.774306729051986,
+    "frameP95": 26.670000000000073,
+    "cars": 20,
+    "textures": 43
+  },
+  "teacherHeapBeforeMiB": 45.1055908203125,
+  "teacherHeapAfterMiB": 41.45027160644531,
+  "answerRttMedianMs": 25.074352999996336,
+  "answerRttP95Ms": 36.75960900000064,
+  "host": {
+    "architecture": "x86_64",
+    "reportedCpuCount": 5
+  },
+  "offlineTestSeconds": 22,
+  "simultaneousAnswerClientsMeasured": 19,
+  "serverRssKiBAfterEarlierRun": 80588,
+  "memoryCaveat": "Instant JS heap without forced GC; server RSS includes retained rooms and dev runtime, not per-room or peak usage",
+  "serverRssKiBAfterFinalRun": 79816
+}

@@ -1,0 +1,14 @@
+{
+  "status": "BLOCKED",
+  "scope": "Supabase PostgreSQL production metadata",
+  "tcpEnabled": false,
+  "allowedTcpDomains": [],
+  "targetHost": "db.icdnxzwkrgkjhoqrvsbh.supabase.co",
+  "targetPort": 5432,
+  "configuredUrlMatchesSupabaseProject": true,
+  "rawDatabaseUrlLogged": false,
+  "queriesExecuted": 0,
+  "schemaVersionsVerified": false,
+  "migrationApplied": false,
+  "reason": "Live proxy policy reports tcp.enabled=false; explicit TCP grant is required before READ ONLY inspection."
+}

@@ -1,0 +1,27 @@
+{
+  "scope": "Supabase production metadata READ ONLY",
+  "observedAt": "2026-11-07T06:06:01.220Z",
+  "mutations": 0,
+  "authSettings": {
+    "status": "PASS",
+    "scope": "public settings only",
+    "signupEnabled": true,
+    "emailConfirmationRequired": true,
+    "emailProviderEnabled": true,
+    "smtpCaptchaSiteUrlNotExposed": true
+  },
+  "jwks": {
+    "status": "PASS",
+    "scope": "public key metadata only",
+    "algorithms": [
+      "ES256"
+    ]
+  },
+  "avatarBucket": {
+    "status": "BLOCKED",
+    "scope": "bucket metadata only; no objects/photos read",
+    "httpStatus": 400,
+    "providerCategory": "BUCKET_NOT_FOUND",
+    "providerStatusCode": "404"
+  }
+}

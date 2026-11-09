@@ -1,0 +1,13 @@
+{
+  "environment": "Local workerd/Miniflare compiled Pages Worker; no hosted Cloudflare",
+  "closedPaths": [
+    "/",
+    "/assets/app.js",
+    "/?mode=student&room=ABC234",
+    "/api/classes",
+    "/socket.io/?EIO=4&transport=websocket"
+  ],
+  "closedStatus": 503,
+  "pilotWithoutIdentity": 403,
+  "passed": true
+}

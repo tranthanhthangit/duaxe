@@ -1,0 +1,8 @@
+{
+  "signal": "SIGKILL",
+  "players": 20,
+  "rollbackMetres": 29.881148781000004,
+  "restoredStatus": "paused",
+  "acknowledgedAnswers": 20,
+  "manualLockDeletion": false
+}

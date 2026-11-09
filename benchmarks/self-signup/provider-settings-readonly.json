@@ -1,0 +1,10 @@
+{
+  "readOnly": true,
+  "ok": true,
+  "signupEnabled": true,
+  "emailConfirmationRequired": true,
+  "emailProviderEnabled": true,
+  "captchaNotExposedByThisEndpoint": true,
+  "smtpDeliveryNotTested": true,
+  "mutations": 0
+}

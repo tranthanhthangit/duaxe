@@ -1,0 +1,54 @@
+{
+  "date": "2026-11-07",
+  "timezone": "Asia/Bangkok",
+  "node": "24.22.1",
+  "database": "PostgreSQL17 local Docker, fresh random databases/roles; no production DB used",
+  "baseline": {
+    "tests": 81,
+    "pass": 81,
+    "fail": 0,
+    "skipped": 0
+  },
+  "finalUnitIntegration": {
+    "tests": 88,
+    "pass": 88,
+    "fail": 0,
+    "skipped": 0
+  },
+  "checks": {
+    "typeScript": true,
+    "legacyDefaultFrontendBackendBuild": true,
+    "pagesSupabaseSyntheticFrontendBackendBuild": true,
+    "chromiumAuthRecoveryRetry": true,
+    "actualAuthOperatorCliLocal": true,
+    "compiledCloudSignalsLocal": true,
+    "chromiumTwentyPlayersLocal": true,
+    "chromiumActiveRaceSignout": true,
+    "finalPagesBuildIncludesLatestFrontend": true
+  },
+  "realSupabase": {
+    "publicJwksReadOnly": true,
+    "keyCount": 1,
+    "algorithms": [
+      "ES256"
+    ],
+    "mutations": 0,
+    "authLogin": false,
+    "smtp": false,
+    "database": false,
+    "privateStorage": false
+  },
+  "externalAcceptanceNotPerformed": [
+    "hosted Auth login/recovery/invite/refresh",
+    "SMTP delivery",
+    "hosted PostgreSQL migration/TLS/RLS",
+    "hosted private Storage policies",
+    "Cloudflare/Render deploy/HTTPS/WSS/restart",
+    "20 physical phones and long soak"
+  ],
+  "productionPublished": false,
+  "realAccountsImported": false,
+  "realPhotosUploaded": false,
+  "gitCommitCreated": false,
+  "localFixtureCleanup": "Task-owned PostgreSQL container/anonymous volume removed after validation; no workspace data deleted"
+}

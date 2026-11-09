@@ -1,0 +1,19 @@
+{
+  "environment": "Cloud headless Chromium, Vite dev, loopback, synthetic avatars; 1 teacher + 1 mobile browser + 19 sockets",
+  "rafFps": 46.40544889787059,
+  "rafFrameP95": 33.400000000001455,
+  "renderer": {
+    "fps": 46.931904934733396,
+    "frameP95": 26.660000000000217,
+    "cars": 20,
+    "textures": 73,
+    "avatarTextures": 20,
+    "visibleAvatars": 15
+  },
+  "answerMedianMs": 53.056400000001304,
+  "answerP95Ms": 53.497683000001416,
+  "heapBeforeMiB": 31.319095611572266,
+  "heapAfterMiB": 31.713733673095703,
+  "heapAfterGcMiB": 13.648380279541016,
+  "offlineSeconds": 22
+}

@@ -1,0 +1,14 @@
+{
+  "environment": "Actual CLI + local PG17 + HTTPS Auth emulator; production flags point only at generated loopback fixture",
+  "offlineDefault": true,
+  "approvalAndProjectGuards": true,
+  "privateAuditWithoutHashes": true,
+  "dryRun": true,
+  "prepareRetry": true,
+  "invite": true,
+  "unconfirmedFinalizeDenied": true,
+  "confirmedMappingPreservesTeacherId": true,
+  "nondestructiveRollback": true,
+  "noSecretsOrEmailInOutput": true,
+  "hostedSupabaseTested": false
+}

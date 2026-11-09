@@ -1,0 +1,18 @@
+[
+  {
+    "test": "sigterm",
+    "exitCode": 0
+  },
+  {
+    "test": "sigint",
+    "exitCode": 0
+  },
+  {
+    "test": "sigkill",
+    "exitCode": 0
+  },
+  {
+    "test": "chromium",
+    "exitCode": 0
+  }
+]

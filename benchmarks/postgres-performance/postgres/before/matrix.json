@@ -1,0 +1,182 @@
+{
+  "measuredAt": "2026-11-06T11:32:31.530Z",
+  "phase": "before",
+  "driver": "postgres",
+  "repeats": 3,
+  "environment": {
+    "node": "v24.22.1",
+    "platform": "linux",
+    "arch": "x64",
+    "cpu": "INTEL(R) XEON(R) PLATINUM 8573C",
+    "logicalCpus": 5,
+    "hostMemoryMiB": 34087.89453125
+  },
+  "method": "Sequential runs; each uses 3 simultaneous question bursts, 10 simultaneous lane bursts, and transport reconnect. Same code and instrumentation for before/after; synthetic data only. No builds/tests run concurrently.",
+  "runs": [
+    {
+      "clients": 1,
+      "repeat": 1,
+      "file": "benchmarks/postgres-performance/postgres/before/1-clients-1.json",
+      "answerRttMs": {
+        "samples": 3,
+        "median": 11.370335000000068,
+        "p95": 22.27386100000001,
+        "p99": 22.27386100000001
+      }
+    },
+    {
+      "clients": 1,
+      "repeat": 2,
+      "file": "benchmarks/postgres-performance/postgres/before/1-clients-2.json",
+      "answerRttMs": {
+        "samples": 3,
+        "median": 9.246102999999948,
+        "p95": 16.122514000000024,
+        "p99": 16.122514000000024
+      }
+    },
+    {
+      "clients": 1,
+      "repeat": 3,
+      "file": "benchmarks/postgres-performance/postgres/before/1-clients-3.json",
+      "answerRttMs": {
+        "samples": 3,
+        "median": 9.875434000000041,
+        "p95": 10.942475999999942,
+        "p99": 10.942475999999942
+      }
+    },
+    {
+      "clients": 5,
+      "repeat": 1,
+      "file": "benchmarks/postgres-performance/postgres/before/5-clients-1.json",
+      "answerRttMs": {
+        "samples": 15,
+        "median": 33.806916,
+        "p95": 61.2456709999999,
+        "p99": 61.2456709999999
+      }
+    },
+    {
+      "clients": 5,
+      "repeat": 2,
+      "file": "benchmarks/postgres-performance/postgres/before/5-clients-2.json",
+      "answerRttMs": {
+        "samples": 15,
+        "median": 45.38027699999998,
+        "p95": 79.48172799999998,
+        "p99": 79.48172799999998
+      }
+    },
+    {
+      "clients": 5,
+      "repeat": 3,
+      "file": "benchmarks/postgres-performance/postgres/before/5-clients-3.json",
+      "answerRttMs": {
+        "samples": 15,
+        "median": 36.06994499999996,
+        "p95": 59.29067199999986,
+        "p99": 59.29067199999986
+      }
+    },
+    {
+      "clients": 10,
+      "repeat": 1,
+      "file": "benchmarks/postgres-performance/postgres/before/10-clients-1.json",
+      "answerRttMs": {
+        "samples": 30,
+        "median": 72.85265399999992,
+        "p95": 125.81340999999998,
+        "p99": 128.79699700000015
+      }
+    },
+    {
+      "clients": 10,
+      "repeat": 2,
+      "file": "benchmarks/postgres-performance/postgres/before/10-clients-2.json",
+      "answerRttMs": {
+        "samples": 30,
+        "median": 72.14159999999993,
+        "p95": 118.02751799999987,
+        "p99": 122.00555499999996
+      }
+    },
+    {
+      "clients": 10,
+      "repeat": 3,
+      "file": "benchmarks/postgres-performance/postgres/before/10-clients-3.json",
+      "answerRttMs": {
+        "samples": 30,
+        "median": 69.768236,
+        "p95": 123.34062800000015,
+        "p99": 124.54894300000001
+      }
+    },
+    {
+      "clients": 15,
+      "repeat": 1,
+      "file": "benchmarks/postgres-performance/postgres/before/15-clients-1.json",
+      "answerRttMs": {
+        "samples": 45,
+        "median": 110.19080400000007,
+        "p95": 207.34000800000013,
+        "p99": 222.80370300000004
+      }
+    },
+    {
+      "clients": 15,
+      "repeat": 2,
+      "file": "benchmarks/postgres-performance/postgres/before/15-clients-2.json",
+      "answerRttMs": {
+        "samples": 45,
+        "median": 109.8809839999999,
+        "p95": 199.09568999999988,
+        "p99": 216.79531099999986
+      }
+    },
+    {
+      "clients": 15,
+      "repeat": 3,
+      "file": "benchmarks/postgres-performance/postgres/before/15-clients-3.json",
+      "answerRttMs": {
+        "samples": 45,
+        "median": 119.98816499999998,
+        "p95": 222.89341200000013,
+        "p99": 242.9354199999998
+      }
+    },
+    {
+      "clients": 20,
+      "repeat": 1,
+      "file": "benchmarks/postgres-performance/postgres/before/20-clients-1.json",
+      "answerRttMs": {
+        "samples": 60,
+        "median": 162.29624000000013,
+        "p95": 302.0844129999998,
+        "p99": 342.25685799999974
+      }
+    },
+    {
+      "clients": 20,
+      "repeat": 2,
+      "file": "benchmarks/postgres-performance/postgres/before/20-clients-2.json",
+      "answerRttMs": {
+        "samples": 60,
+        "median": 160.51453700000002,
+        "p95": 297.4457510000002,
+        "p99": 338.02847399999973
+      }
+    },
+    {
+      "clients": 20,
+      "repeat": 3,
+      "file": "benchmarks/postgres-performance/postgres/before/20-clients-3.json",
+      "answerRttMs": {
+        "samples": 60,
+        "median": 168.36032499999965,
+        "p95": 326.6238049999997,
+        "p99": 372.108557
+      }
+    }
+  ]
+}

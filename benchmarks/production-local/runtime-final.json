@@ -1,0 +1,10 @@
+[
+  {
+    "command": "npm run test:pages-gate",
+    "exitCode": 0
+  },
+  {
+    "command": "npm run test:cloud-signals",
+    "exitCode": 0
+  }
+]

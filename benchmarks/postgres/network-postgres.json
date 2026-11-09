@@ -1,0 +1,104 @@
+{
+  "driver": "postgres",
+  "backend": {
+    "ackProcessingMs": {
+      "samples": 325,
+      "median": 178.46607799999992,
+      "p95": 369.8701259999998,
+      "p99": 397.6738299999997
+    },
+    "saveMs": {
+      "samples": 329,
+      "median": 17.8734000000004,
+      "p95": 22.591731999999865,
+      "p99": 28.115582999999788
+    },
+    "checkpointMs": {
+      "samples": 1,
+      "median": 18.961307000001398,
+      "p95": 18.961307000001398,
+      "p99": 18.961307000001398
+    }
+  },
+  "eventLoopDelayMs": {
+    "mean": 10.211145221505376,
+    "p95": 11.247615,
+    "p99": 12.525567,
+    "max": 16.162815
+  },
+  "database": {
+    "queryMs": {
+      "samples": 2048,
+      "median": 0.8630550000007133,
+      "p95": 3.3996270000006916,
+      "p99": 4.35678900000039
+    },
+    "transactionMs": {
+      "samples": 329,
+      "median": 16.66210300000057,
+      "p95": 20.906757000000653,
+      "p99": 26.631000000000313
+    },
+    "poolWaitMs": {
+      "samples": 329,
+      "median": 0.10451199999988603,
+      "p95": 0.21927499999992506,
+      "p99": 0.3201939999999013
+    },
+    "pool": {
+      "total": 1,
+      "idle": 1,
+      "waiting": 0,
+      "pendingPeak": 1,
+      "max": 4,
+      "dedicatedWriterConnections": 1
+    },
+    "errors": 0,
+    "writerHealthy": true
+  },
+  "queue": {
+    "activeRooms": 0,
+    "pending": 0,
+    "maxDepth": 20,
+    "completed": 363,
+    "failed": 0,
+    "rejected": 0,
+    "waitMs": {
+      "samples": 363,
+      "median": 137.42586000000028,
+      "p95": 346.8280850000001,
+      "p99": 378.85970199999974
+    }
+  },
+  "environment": "Loopback simulated 20 clients, one Node process; postgres local database; forced transport closure on 3 clients; reconnectDelay 100ms",
+  "answerRttMs": {
+    "samples": 60,
+    "median": 166.74426600000015,
+    "p95": 314.7800830000001,
+    "p99": 374.93935899999997
+  },
+  "laneRttMs": {
+    "samples": 200,
+    "median": 214.08922699999948,
+    "p95": 385.5737399999998,
+    "p99": 405.714884
+  },
+  "rankingFrameGapMs": {
+    "samples": 41,
+    "median": 100.36742599999889,
+    "p95": 502.23564899999974,
+    "p99": 801.8422680000001
+  },
+  "firstSimultaneousAnswersToTeacherFrameMs": 670.7688740000001,
+  "disconnects": 3,
+  "unplannedDisconnects": 0,
+  "reconnectMs": {
+    "samples": 3,
+    "median": 155.8274820000006,
+    "p95": 173.49530799999957,
+    "p99": 173.49530799999957
+  },
+  "sentBytesPerSecond": 569997.4008664708,
+  "receivedBytesPerSecond": 1878.6911510173413,
+  "durationSeconds": 9.179262909
+}

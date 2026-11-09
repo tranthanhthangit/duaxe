@@ -1,0 +1,85 @@
+{
+  "environment": "Local PostgreSQL17 + synthetic SQLite v2 copy only",
+  "schemaRerun": true,
+  "dryRun": {
+    "dryRun": true,
+    "batchId": "451a0255-c1e2-4db5-8bde-6757792ba1ba",
+    "counts": {
+      "teachers": 1,
+      "sessions": 1,
+      "classes": 1,
+      "avatars": 1,
+      "students": 1,
+      "race_sessions": 1,
+      "room_questions": 3,
+      "race_players": 1,
+      "race_answers": 1,
+      "command_receipts": 0
+    },
+    "targetCounts": {
+      "teachers": 1,
+      "sessions": 1,
+      "classes": 1,
+      "avatars": 1,
+      "students": 1,
+      "race_sessions": 1,
+      "room_questions": 3,
+      "race_players": 1,
+      "race_answers": 1,
+      "command_receipts": 0
+    },
+    "rowsToCreate": 11,
+    "verified": true
+  },
+  "apply": {
+    "dryRun": false,
+    "batchId": "451a0255-c1e2-4db5-8bde-6757792ba1ba",
+    "counts": {
+      "teachers": 1,
+      "sessions": 1,
+      "classes": 1,
+      "avatars": 1,
+      "students": 1,
+      "race_sessions": 1,
+      "room_questions": 3,
+      "race_players": 1,
+      "race_answers": 1,
+      "command_receipts": 0
+    },
+    "targetCounts": {
+      "teachers": 1,
+      "sessions": 1,
+      "classes": 1,
+      "avatars": 1,
+      "students": 1,
+      "race_sessions": 1,
+      "room_questions": 3,
+      "race_players": 1,
+      "race_answers": 1,
+      "command_receipts": 0
+    },
+    "rowsCreated": 11,
+    "verified": true
+  },
+  "retry": {
+    "dryRun": false,
+    "batchId": "451a0255-c1e2-4db5-8bde-6757792ba1ba",
+    "counts": {
+      "teachers": 1,
+      "sessions": 1,
+      "classes": 1,
+      "avatars": 1,
+      "students": 1,
+      "race_sessions": 1,
+      "room_questions": 3,
+      "race_players": 1,
+      "race_answers": 1,
+      "command_receipts": 0
+    },
+    "alreadyApplied": true
+  },
+  "rollback": {
+    "rolledBack": true
+  },
+  "sourceUnchanged": true
+}

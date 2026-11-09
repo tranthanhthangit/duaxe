@@ -1,0 +1,30 @@
+[
+  {
+    "command": "npm run typecheck",
+    "exitCode": 0
+  },
+  {
+    "command": "npm test",
+    "exitCode": 0
+  },
+  {
+    "command": "npm run build",
+    "exitCode": 0
+  },
+  {
+    "command": "npm run cloud:build-functions",
+    "exitCode": 0
+  },
+  {
+    "command": "npm run cloud:check-pages",
+    "exitCode": 0
+  },
+  {
+    "command": "npm run cloud:operator -- schema",
+    "exitCode": 0
+  },
+  {
+    "command": "npm run cloud:preflight",
+    "exitCode": 0
+  }
+]

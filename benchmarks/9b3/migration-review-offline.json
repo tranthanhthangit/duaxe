@@ -1,0 +1,33 @@
+{
+  "mode": "offline-review",
+  "productionState": "NOT TESTED",
+  "files": [
+    {
+      "version": 1,
+      "file": "001_storage.sql",
+      "sha256": "cfb42968292938fb93b55b17287b7a0e01270dfeca71def844a6cba1fcca5a5b",
+      "bytes": 5380
+    },
+    {
+      "version": 2,
+      "file": "002_cloud.sql",
+      "sha256": "aeb394eadd4239311799470434fe025d005f179922163df331d7a1d846efb10f",
+      "bytes": 1829
+    },
+    {
+      "version": 3,
+      "file": "003_auth_migration.sql",
+      "sha256": "6172d9546cc72b6792b46d5b766ddd4b8da7d8d63b0ad1bc1f935c68bafea927",
+      "bytes": 1876
+    },
+    {
+      "version": 4,
+      "file": "004_teacher_signup.sql",
+      "sha256": "6f6bb72797d0ae1aca7dc6844242fbe6be92cac410db9e44fc6a14e427a94a14",
+      "bytes": 964
+    }
+  ],
+  "approvalRequired": true,
+  "note": "Target4 applies all missing 001..004, not just004. Verify database metadata and approve the exact pending list first.",
+  "mutations": 0
+}

@@ -1,0 +1,47 @@
+node_modules/
+dist/
+*.tsbuildinfo
+
+dist-server/
+.env
+.env.local
+
+*.sqlite*
+classroom-data/
+avatars/
+backups/
+
+# Keep environment secrets private; retain the documented template.
+.env.*
+!.env.example
+*.db
+*.db-*
+*.db.lock
+*.db.guard
+
+# Private operational data / exported rosters (never web assets).
+private-data/
+exports/
+postgres-data/
+*.pgpass
+*.dump
+
+# Cloudflare local credentials/cache and private operational backups
+.dev.vars
+.dev.vars.*
+.wrangler/
+.private/
+private-backups/
+
+# Local test screenshots, exports and logs are kept off the public repository.
+benchmarks/**/*.png
+benchmarks/**/*.jpg
+benchmarks/**/*.webp
+benchmarks/**/*.csv
+benchmarks/**/*.log
+
+# Private keys, certificates and local credential files.
+*.pem
+*.key
+.npmrc
+.netrc

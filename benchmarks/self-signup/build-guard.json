@@ -1,0 +1,24 @@
+{
+  "cases": [
+    {
+      "case": "missing-key",
+      "expectedExit": 1,
+      "actualExit": 1,
+      "passed": true
+    },
+    {
+      "case": "provider-universal-test-key",
+      "expectedExit": 1,
+      "actualExit": 1,
+      "passed": true
+    },
+    {
+      "case": "synthetic-shape-check",
+      "expectedExit": 0,
+      "actualExit": 0,
+      "passed": true
+    }
+  ],
+  "networkRequests": 0,
+  "keyOwnershipVerified": false
+}

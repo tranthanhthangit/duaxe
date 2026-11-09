@@ -1,0 +1,41 @@
+{
+  "date": "2026-11-07",
+  "timezone": "Asia/Bangkok",
+  "node": "v24.22.1",
+  "database": "PostgreSQL17 local Docker, generated temporary databases/roles",
+  "unitIntegration": {
+    "tests": 94,
+    "pass": 94,
+    "fail": 0,
+    "skipped": 0
+  },
+  "checks": {
+    "defaultFrontendBackendBuild": true,
+    "selfSignupPagesFrontendBackendBuild": true,
+    "typeScript": true,
+    "selfSignupChromium": true,
+    "auth92RegressionChromium": true,
+    "compiledServerSignupAnd20PlayerSignals": true,
+    "pagesFunctionsCompile": true,
+    "pagesGateClosed": true,
+    "buildCaptchaGuard": true
+  },
+  "realSupabase": {
+    "readOnly": true,
+    "ok": true,
+    "signupEnabled": true,
+    "emailConfirmationRequired": true,
+    "emailProviderEnabled": true,
+    "captchaNotExposedByThisEndpoint": true,
+    "smtpDeliveryNotTested": true,
+    "mutations": 0
+  },
+  "hostedSignupLoginSmtpCaptchaNotTested": true,
+  "productionMigrationApplied": false,
+  "realAccountsMigrated": false,
+  "realPhotosUploaded": false,
+  "published": false,
+  "gitCommitCreated": false,
+  "physicalPhonesTested": 0,
+  "newFpsRttMeasurementPerformed": false
+}

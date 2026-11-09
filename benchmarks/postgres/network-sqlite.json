@@ -1,0 +1,74 @@
+{
+  "driver": "sqlite",
+  "backend": {
+    "ackProcessingMs": {
+      "samples": 325,
+      "median": 3.1041850000000295,
+      "p95": 4.4412079999999605,
+      "p99": 5.958761999999751
+    },
+    "saveMs": {
+      "samples": 329,
+      "median": 2.615436000000045,
+      "p95": 3.8033430000000408,
+      "p99": 4.768254999999954
+    },
+    "checkpointMs": {
+      "samples": 1,
+      "median": 2.729972999999518,
+      "p95": 2.729972999999518,
+      "p99": 2.729972999999518
+    }
+  },
+  "eventLoopDelayMs": {
+    "mean": 12.801332565333333,
+    "p95": 13.467647,
+    "p99": 73.596927,
+    "max": 80.150527
+  },
+  "queue": {
+    "activeRooms": 0,
+    "pending": 0,
+    "maxDepth": 2,
+    "completed": 372,
+    "failed": 0,
+    "rejected": 0,
+    "waitMs": {
+      "samples": 372,
+      "median": 0.006037999999989552,
+      "p95": 0.020954000000074302,
+      "p99": 0.10239200000000892
+    }
+  },
+  "environment": "Loopback simulated 20 clients, one Node process; sqlite local database; forced transport closure on 3 clients; reconnectDelay 100ms",
+  "answerRttMs": {
+    "samples": 60,
+    "median": 68.69800000000009,
+    "p95": 71.93606900000009,
+    "p99": 72.38041300000009
+  },
+  "laneRttMs": {
+    "samples": 200,
+    "median": 70.71034400000008,
+    "p95": 77.09684100000004,
+    "p99": 77.47808799999984
+  },
+  "rankingFrameGapMs": {
+    "samples": 48,
+    "median": 99.82212600000003,
+    "p95": 127.50182800000039,
+    "p99": 129.20820700000013
+  },
+  "firstSimultaneousAnswersToTeacherFrameMs": 128.6276459999999,
+  "disconnects": 3,
+  "unplannedDisconnects": 0,
+  "reconnectMs": {
+    "samples": 3,
+    "median": 118.90588299999945,
+    "p95": 123.4487079999999,
+    "p99": 123.4487079999999
+  },
+  "sentBytesPerSecond": 1315300.5848430635,
+  "receivedBytesPerSecond": 3719.7829541482142,
+  "durationSeconds": 4.6360231800000005
+}

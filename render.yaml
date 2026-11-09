@@ -1,0 +1,46 @@
+# Review before creating services. No automatic deploy, no migration at boot.
+services:
+  - type: web
+    name: duaxe-backend
+    runtime: node
+    plan: starter
+    numInstances: 1
+    autoDeployTrigger: off
+    buildCommand: npm ci --include=dev && npm run typecheck && npm run server:build
+    startCommand: node dist-server/index.js
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_VERSION
+        value: "24"
+      - key: NODE_ENV
+        value: production
+      - key: STORAGE_DRIVER
+        value: postgres
+      - key: TEACHER_AUTH_DRIVER
+        value: supabase
+      - key: TEACHER_SELF_SIGNUP
+        value: "true"
+      - key: AVATAR_STORAGE_DRIVER
+        value: supabase
+      - key: PRODUCTION_ACCESS_MODE
+        value: closed
+      - key: PG_POOL_MAX
+        value: "4"
+      - key: PG_SSL_MODE
+        value: verify-full
+      - key: DATABASE_URL
+        sync: false
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_STORAGE_KEY
+        sync: false
+      - key: SUPABASE_AVATAR_BUCKET
+        value: student-avatars
+      - key: BACKEND_GATEWAY_KEY
+        sync: false
+      - key: CORS_ORIGINS
+        sync: false
+      - key: TURNSTILE_SECRET_KEY
+        sync: false
+      - key: TURNSTILE_EXPECTED_HOSTNAME
+        sync: false

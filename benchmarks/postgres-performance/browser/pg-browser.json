@@ -1,0 +1,323 @@
+{
+  "environment": "Local PostgreSQL17 Docker + headless Chromium Vite dev; synthetic photos; one teacher, one mobile viewport and19 sockets",
+  "checksPassed": true,
+  "reactCommits": 77,
+  "reactRenderMs": 856.1999999955297,
+  "phaserUpdateMs": 59.99999999627471,
+  "phaserUpdateFrames": 262,
+  "rafFps": 32.18402275335561,
+  "rafFrameP95": 50,
+  "renderer": {
+    "fps": 37.69831670732852,
+    "frameP95": 40,
+    "updateCpuMs": 331.30000004917383,
+    "updateFrames": 1504,
+    "cars": 20,
+    "textures": 89,
+    "avatarTextures": 20,
+    "visibleAvatars": 15
+  },
+  "heapBeforeMiB": 41.183380126953125,
+  "heapAfterMiB": 45.98882293701172,
+  "heapAfterGcMiB": 13.194694519042969,
+  "offlineSeconds": 22,
+  "avatarBindings": 20,
+  "answersAcknowledged": 20,
+  "queue": {
+    "activeRooms": 0,
+    "pending": 0,
+    "maxDepth": 19,
+    "completed": 482,
+    "failed": 0,
+    "rejected": 0,
+    "waitMs": {
+      "samples": 482,
+      "median": 0.0208440000005794,
+      "p95": 75.98923699999978,
+      "p99": 238.7382970000017
+    }
+  },
+  "backend": {
+    "ackProcessingMs": {
+      "samples": 50,
+      "median": 81.17178599999988,
+      "p95": 302.1219550000005,
+      "p99": 353.80360800000017
+    },
+    "saveMs": {
+      "samples": 59,
+      "median": 15.933167999999569,
+      "p95": 33.79629700000078,
+      "p99": 35.83226599999762
+    },
+    "checkpointMs": {
+      "samples": 9,
+      "median": 27.774616000002425,
+      "p95": 35.86438699999417,
+      "p99": 35.86438699999417
+    },
+    "requestQueueWaitMs": {
+      "create": {
+        "samples": 1,
+        "median": 0.6654760000001261,
+        "p95": 0.6654760000001261,
+        "p99": 0.6654760000001261
+      },
+      "claim": {
+        "samples": 20,
+        "median": 78.88221900000008,
+        "p95": 192.40416000000005,
+        "p99": 202.98832399999992
+      },
+      "control": {
+        "samples": 4,
+        "median": 0.014274000001023524,
+        "p95": 0.027457000000140397,
+        "p99": 0.027457000000140397
+      },
+      "answer": {
+        "samples": 20,
+        "median": 119.27956300000005,
+        "p95": 300.90237200000047,
+        "p99": 324.5596719999994
+      },
+      "next": {
+        "samples": 1,
+        "median": 0.016265000000203145,
+        "p95": 0.016265000000203145,
+        "p99": 0.016265000000203145
+      },
+      "lane": {
+        "samples": 1,
+        "median": 0.01899300000150106,
+        "p95": 0.01899300000150106,
+        "p99": 0.01899300000150106
+      },
+      "resume": {
+        "samples": 1,
+        "median": 0.029061999994155485,
+        "p95": 0.029061999994155485,
+        "p99": 0.029061999994155485
+      },
+      "report": {
+        "samples": 1,
+        "median": 0.014042000002518762,
+        "p95": 0.014042000002518762,
+        "p99": 0.014042000002518762
+      }
+    },
+    "requestAckMs": {
+      "create": {
+        "samples": 1,
+        "median": 52.73837300000014,
+        "p95": 52.73837300000014,
+        "p99": 52.73837300000014
+      },
+      "preview": {
+        "samples": 1,
+        "median": 1.160638999999719,
+        "p95": 1.160638999999719,
+        "p99": 1.160638999999719
+      },
+      "claim": {
+        "samples": 20,
+        "median": 88.44405600000027,
+        "p95": 204.56228900000042,
+        "p99": 215.44131000000016
+      },
+      "control": {
+        "samples": 4,
+        "median": 12.151805999999851,
+        "p95": 16.73416999999972,
+        "p99": 16.73416999999972
+      },
+      "answer": {
+        "samples": 20,
+        "median": 141.76063199999953,
+        "p95": 325.90000899999905,
+        "p99": 353.80360800000017
+      },
+      "next": {
+        "samples": 1,
+        "median": 20.370550999999978,
+        "p95": 20.370550999999978,
+        "p99": 20.370550999999978
+      },
+      "lane": {
+        "samples": 1,
+        "median": 19.313116000001173,
+        "p95": 19.313116000001173,
+        "p99": 19.313116000001173
+      },
+      "resume": {
+        "samples": 1,
+        "median": 38.48408799999743,
+        "p95": 38.48408799999743,
+        "p99": 38.48408799999743
+      },
+      "report": {
+        "samples": 1,
+        "median": 0.7969569999986561,
+        "p95": 0.7969569999986561,
+        "p99": 0.7969569999986561
+      }
+    }
+  },
+  "database": {
+    "queryMs": {
+      "samples": 624,
+      "median": 0.9283440000017436,
+      "p95": 10.023461000000225,
+      "p99": 20.54989100000239
+    },
+    "transactionMs": {
+      "samples": 102,
+      "median": 8.291896999999153,
+      "p95": 27.7293120000013,
+      "p99": 31.904201999997895
+    },
+    "poolWaitMs": {
+      "samples": 102,
+      "median": 0.06751900000381283,
+      "p95": 0.30048899999928835,
+      "p99": 0.41183300000011513
+    },
+    "pool": {
+      "total": 1,
+      "idle": 1,
+      "waiting": 0,
+      "pendingPeak": 15,
+      "max": 4,
+      "dedicatedWriterConnections": 1,
+      "busyPeak": 1,
+      "totalPeak": 4
+    },
+    "roomTransactions": {
+      "count": 59,
+      "phases": {
+        "acquireMs": {
+          "samples": 59,
+          "median": 0.1168889999989915,
+          "p95": 0.34691300000031333,
+          "p99": 0.4465570000002117
+        },
+        "beginMs": {
+          "samples": 59,
+          "median": 1.3805869999996503,
+          "p95": 8.976951999997254,
+          "p99": 12.800986999998713
+        },
+        "fenceMs": {
+          "samples": 59,
+          "median": 0,
+          "p95": 0,
+          "p99": 0
+        },
+        "roomLockMs": {
+          "samples": 59,
+          "median": 0,
+          "p95": 0,
+          "p99": 0
+        },
+        "previousReadMs": {
+          "samples": 59,
+          "median": 0,
+          "p95": 0,
+          "p99": 0
+        },
+        "duplicateQueryMs": {
+          "samples": 59,
+          "median": 0,
+          "p95": 0,
+          "p99": 0
+        },
+        "duplicateCheckMs": {
+          "samples": 59,
+          "median": 0,
+          "p95": 0,
+          "p99": 0
+        },
+        "sessionWriteMs": {
+          "samples": 59,
+          "median": 0,
+          "p95": 0,
+          "p99": 2.0890110000000277
+        },
+        "questionWriteMs": {
+          "samples": 59,
+          "median": 0,
+          "p95": 0,
+          "p99": 1.7721330000003945
+        },
+        "playerWriteMs": {
+          "samples": 59,
+          "median": 0,
+          "p95": 0,
+          "p99": 1.4967390000001615
+        },
+        "answerInsertMs": {
+          "samples": 59,
+          "median": 0,
+          "p95": 0,
+          "p99": 0.6227500000004511
+        },
+        "receiptInsertMs": {
+          "samples": 59,
+          "median": 0,
+          "p95": 0,
+          "p99": 0.37352699999973993
+        },
+        "commitMs": {
+          "samples": 59,
+          "median": 1.9619579999998678,
+          "p95": 7.438404000000446,
+          "p99": 12.589482999999746
+        },
+        "otherMs": {
+          "samples": 59,
+          "median": 0,
+          "p95": 0,
+          "p99": 0
+        },
+        "queryExecutionMs": {
+          "samples": 59,
+          "median": 14.498070999999982,
+          "p95": 29.731648000008136,
+          "p99": 33.56117699999595
+        },
+        "totalMs": {
+          "samples": 59,
+          "median": 14.845782000000327,
+          "p95": 30.947825999995985,
+          "p99": 34.0576099999962
+        },
+        "roundTrips": {
+          "samples": 59,
+          "median": 4,
+          "p95": 4,
+          "p99": 11
+        },
+        "lockedReadMs": {
+          "samples": 59,
+          "median": 0,
+          "p95": 0,
+          "p99": 0
+        },
+        "combinedWriteMs": {
+          "samples": 59,
+          "median": 6.972925000000032,
+          "p95": 20.666010000000824,
+          "p99": 26.740554999996675
+        },
+        "fenceRoomLockMs": {
+          "samples": 59,
+          "median": 1.114157999998497,
+          "p95": 6.843721999999616,
+          "p99": 9.050655999999435
+        }
+      }
+    },
+    "errors": 0,
+    "writerHealthy": true
+  }
+}

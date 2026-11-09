@@ -1,0 +1,29 @@
+{
+  "environment": "Local PostgreSQL17 + emulated Supabase Auth/Storage + actual browser SDK; Vite proxy, not Cloudflare/Render; synthetic data",
+  "checksPassed": true,
+  "avatarBindings": 20,
+  "answers": 20,
+  "offlineSeconds": 22,
+  "answerRttMs": {
+    "samples": 19,
+    "median": 252.41842700000052,
+    "p95": 493.07541499999934
+  },
+  "fps": 20.16681190090875,
+  "frameP95": 66.70000000000437,
+  "renderer": {
+    "fps": 19.34103794324824,
+    "frameP95": 73.33999999999978,
+    "updateCpuMs": 339.4999999990687,
+    "updateFrames": 728,
+    "cars": 20,
+    "textures": 89,
+    "avatarTextures": 20,
+    "visibleAvatars": 15
+  },
+  "networkPayloadBytesPerSecond": {
+    "sent": 2175893.950392725,
+    "received": 0
+  },
+  "nodeRssMiBIncludesViteEmulator": 454.59765625
+}

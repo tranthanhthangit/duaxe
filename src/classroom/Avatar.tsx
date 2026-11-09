@@ -1,0 +1,5 @@
+import {cloudAuth,teacherToken} from './auth';
+import {apiBase} from './api';
+import {useEffect,useState,memo} from 'react';
+export const Avatar=memo(function Avatar({src,name='Bé'}:{src?:string;name?:string}){const [privateSrc,setPrivateSrc]=useState<string>();const protectedImage=cloudAuth&&!!src&&src.startsWith(apiBase+'/api/avatars/');
+ useEffect(()=>{let active=true,url:string|undefined;setPrivateSrc(undefined);if(protectedImage)void teacherToken().then(token=>fetch(src!,{headers:{Authorization:'Bearer '+token},credentials:'omit'})).then(r=>{if(!r.ok)throw Error('Denied');return r.blob();}).then(blob=>{url=URL.createObjectURL(blob);if(active)setPrivateSrc(url);else URL.revokeObjectURL(url);}).catch(()=>{});return()=>{active=false;if(url)URL.revokeObjectURL(url);};},[src,protectedImage]);const display=protectedImage?privateSrc:src;return display?<img className="student-avatar" src={display} alt={`Ảnh ${name}`} loading="lazy"/>:<span className="student-avatar avatar-default" aria-label="Ảnh mặc định">✿</span>;});

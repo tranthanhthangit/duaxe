@@ -1,0 +1,221 @@
+{
+  "environment": "Cloud software Chromium, isolated renderer, 3s samples, synthetic images",
+  "rows": [
+    {
+      "cars": 5,
+      "off": "none",
+      "fps": 53.37311453671474,
+      "p95": 33.30000000000018,
+      "renderer": {
+        "fps": 57.369550926968756,
+        "frameP95": 20,
+        "updateCpuMs": 0,
+        "updateFrames": 0,
+        "cars": 5,
+        "textures": 28,
+        "avatarTextures": 5,
+        "visibleAvatars": 5
+      },
+      "heapMiB": 9.424690246582031,
+      "cpuTaskSeconds": 3.042538
+    },
+    {
+      "cars": 5,
+      "off": "avatars",
+      "fps": 53.37311453671472,
+      "p95": 33.30000000000018,
+      "renderer": {
+        "fps": 58.35050230829239,
+        "frameP95": 19.99000000000001,
+        "updateCpuMs": 0,
+        "updateFrames": 0,
+        "cars": 5,
+        "textures": 28,
+        "avatarTextures": 5,
+        "visibleAvatars": 0
+      },
+      "heapMiB": 9.921070098876953,
+      "cpuTaskSeconds": 3.041268
+    },
+    {
+      "cars": 10,
+      "off": "none",
+      "fps": 52.70834714579327,
+      "p95": 33.30000000000018,
+      "renderer": {
+        "fps": 57.4387193698152,
+        "frameP95": 20,
+        "updateCpuMs": 0,
+        "updateFrames": 0,
+        "cars": 10,
+        "textures": 43,
+        "avatarTextures": 10,
+        "visibleAvatars": 10
+      },
+      "heapMiB": 11.117630004882812,
+      "cpuTaskSeconds": 3.045261
+    },
+    {
+      "cars": 10,
+      "off": "avatars",
+      "fps": 53.37311453671472,
+      "p95": 33.30000000000018,
+      "renderer": {
+        "fps": 58.043343212903,
+        "frameP95": 20,
+        "updateCpuMs": 0,
+        "updateFrames": 0,
+        "cars": 10,
+        "textures": 43,
+        "avatarTextures": 10,
+        "visibleAvatars": 0
+      },
+      "heapMiB": 11.62603759765625,
+      "cpuTaskSeconds": 3.063896
+    },
+    {
+      "cars": 15,
+      "off": "none",
+      "fps": 51.713850029834894,
+      "p95": 33.40000000000009,
+      "renderer": {
+        "fps": 57.524895496439896,
+        "frameP95": 20,
+        "updateCpuMs": 0,
+        "updateFrames": 0,
+        "cars": 15,
+        "textures": 58,
+        "avatarTextures": 15,
+        "visibleAvatars": 15
+      },
+      "heapMiB": 11.634197235107422,
+      "cpuTaskSeconds": 3.052846
+    },
+    {
+      "cars": 15,
+      "off": "avatars",
+      "fps": 52.37858445217968,
+      "p95": 33.399999999999636,
+      "renderer": {
+        "fps": 57.56334064496104,
+        "frameP95": 20,
+        "updateCpuMs": 0,
+        "updateFrames": 0,
+        "cars": 15,
+        "textures": 58,
+        "avatarTextures": 15,
+        "visibleAvatars": 0
+      },
+      "heapMiB": 10.857566833496094,
+      "cpuTaskSeconds": 3.060608
+    },
+    {
+      "cars": 20,
+      "off": "none",
+      "fps": 51.10114730317814,
+      "p95": 33.399999999999636,
+      "renderer": {
+        "fps": 57.24411398653456,
+        "frameP95": 20,
+        "updateCpuMs": 0,
+        "updateFrames": 0,
+        "cars": 20,
+        "textures": 73,
+        "avatarTextures": 20,
+        "visibleAvatars": 19
+      },
+      "heapMiB": 10.604061126708984,
+      "cpuTaskSeconds": 3.064132
+    },
+    {
+      "cars": 20,
+      "off": "avatars",
+      "fps": 52.04534906848771,
+      "p95": 33.399999999999636,
+      "renderer": {
+        "fps": 57.351868906234756,
+        "frameP95": 20,
+        "updateCpuMs": 0,
+        "updateFrames": 0,
+        "cars": 20,
+        "textures": 73,
+        "avatarTextures": 20,
+        "visibleAvatars": 0
+      },
+      "heapMiB": 12.0101318359375,
+      "cpuTaskSeconds": 3.0543609999999997
+    },
+    {
+      "cars": 20,
+      "off": "labels",
+      "fps": 52.3768481071405,
+      "p95": 33.399999999999636,
+      "renderer": {
+        "fps": 57.30639987907515,
+        "frameP95": 20,
+        "updateCpuMs": 0,
+        "updateFrames": 0,
+        "cars": 20,
+        "textures": 73,
+        "avatarTextures": 20,
+        "visibleAvatars": 19
+      },
+      "heapMiB": 9.815132141113281,
+      "cpuTaskSeconds": 3.061502
+    },
+    {
+      "cars": 20,
+      "off": "cars",
+      "fps": 56.686335609626745,
+      "p95": 33.29999999999973,
+      "renderer": {
+        "fps": 58.89584506737145,
+        "frameP95": 18.34000000000001,
+        "updateCpuMs": 0,
+        "updateFrames": 0,
+        "cars": 20,
+        "textures": 68,
+        "avatarTextures": 20,
+        "visibleAvatars": 0
+      },
+      "heapMiB": 8.655860900878906,
+      "cpuTaskSeconds": 3.043829
+    },
+    {
+      "cars": 20,
+      "off": "road",
+      "fps": 55.36217470578486,
+      "p95": 33.30000000000018,
+      "renderer": {
+        "fps": 58.49766787223023,
+        "frameP95": 18.34000000000001,
+        "updateCpuMs": 0,
+        "updateFrames": 0,
+        "cars": 20,
+        "textures": 67,
+        "avatarTextures": 20,
+        "visibleAvatars": 19
+      },
+      "heapMiB": 9.196613311767578,
+      "cpuTaskSeconds": 3.0595019999999997
+    },
+    {
+      "cars": 20,
+      "off": "effects",
+      "fps": 51.14921800714777,
+      "p95": 33.399999999999636,
+      "renderer": {
+        "fps": 57.21029802410337,
+        "frameP95": 20,
+        "updateCpuMs": 0,
+        "updateFrames": 0,
+        "cars": 20,
+        "textures": 73,
+        "avatarTextures": 20,
+        "visibleAvatars": 19
+      },
+      "heapMiB": 11.983814239501953,
+      "cpuTaskSeconds": 3.069621
+    }
+  ]
+}

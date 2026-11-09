@@ -1,0 +1,67 @@
+{
+  "baseline": "source snapshot at start of self-signup task; Git originally untracked",
+  "protectedUnchanged": true,
+  "protectedFileCount": 30,
+  "protectedViolations": [],
+  "modifiedFiles": [
+    ".env.example",
+    "PRODUCTION_IMPLEMENTATION.md",
+    "README.md",
+    "SUPABASE_AUTH_PRODUCTION_MIGRATION.md",
+    "functions/_middleware.ts",
+    "package.json",
+    "render.yaml",
+    "scripts/cloud/auth-browser.ts",
+    "scripts/cloud/check-build.ts",
+    "scripts/cloud/operator.ts",
+    "scripts/cloud/persistence.ts",
+    "scripts/cloud/preflight.ts",
+    "server/classroom/api.ts",
+    "server/cloud/AuthUserStatus.ts",
+    "server/cloud/TeacherAuth.ts",
+    "server/cloud/TeacherMigration.ts",
+    "server/storage/contracts.ts",
+    "server/storage/factory.ts",
+    "server/storage/postgres/Database.ts",
+    "server/storage/postgres/importer.ts",
+    "server/storage/postgres/migrate.ts",
+    "src/classroom/ClassroomPanel.tsx",
+    "src/classroom/TeacherLogin.tsx",
+    "src/classroom/api.ts",
+    "src/classroom/auth.ts",
+    "tests/cloud-security.test.ts",
+    "tests/helpers/supabase.ts"
+  ],
+  "newSourceFiles": [
+    "scripts/cloud/signup-browser.ts",
+    "server/cloud/TeacherSignup.ts",
+    "server/storage/postgres/migrations/004_teacher_signup.sql",
+    "src/classroom/AuthChallenge.tsx",
+    "tests/teacher-signup.test.ts"
+  ],
+  "removedOriginalFiles": [],
+  "oldBenchmarkFilesUnchanged": true,
+  "clientSecretVariableReferences": [
+    {
+      "serverVariable": "SUPABASE_STORAGE_KEY",
+      "clientReferences": []
+    },
+    {
+      "serverVariable": "SUPABASE_AUTH_ADMIN_KEY",
+      "clientReferences": []
+    },
+    {
+      "serverVariable": "DATABASE_URL",
+      "clientReferences": []
+    },
+    {
+      "serverVariable": "BACKEND_GATEWAY_KEY",
+      "clientReferences": []
+    },
+    {
+      "serverVariable": "TURNSTILE_SECRET_KEY",
+      "clientReferences": []
+    }
+  ],
+  "buildArtifact": "synthetic public configuration only; not a production release"
+}

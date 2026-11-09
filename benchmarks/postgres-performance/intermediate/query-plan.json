@@ -1,0 +1,515 @@
+{
+  "environment": "Local PostgreSQL17 EXPLAIN ANALYZE; synthetic20 players; all5 mutations ROLLBACK; node times are cumulative, not additive",
+  "plans": [
+    {
+      "planningMs": 1.177,
+      "executionMs": 3.231,
+      "jit": null,
+      "triggers": [
+        {
+          "Trigger Name": "RI_ConstraintTrigger_c_29828",
+          "Constraint Name": "race_answers_room_code_player_id_fkey",
+          "Relation": "race_answers",
+          "Time": 0.226,
+          "Calls": 1
+        },
+        {
+          "Trigger Name": "RI_ConstraintTrigger_c_29833",
+          "Constraint Name": "race_answers_room_code_question_id_fkey",
+          "Relation": "race_answers",
+          "Time": 0.094,
+          "Calls": 1
+        },
+        {
+          "Trigger Name": "RI_ConstraintTrigger_c_29846",
+          "Constraint Name": "command_receipts_room_code_fkey",
+          "Relation": "command_receipts",
+          "Time": 0.059,
+          "Calls": 1
+        }
+      ],
+      "nodes": [
+        {
+          "Node Type": "ModifyTable",
+          "Operation": "Update",
+          "Relation Name": "race_sessions",
+          "Subplan Name": "CTE saved",
+          "Actual Total Time": 1.061,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 20,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 2
+        },
+        {
+          "Node Type": "ModifyTable",
+          "Operation": "Delete",
+          "Relation Name": "race_players",
+          "Subplan Name": "CTE removed",
+          "Actual Total Time": 0.029,
+          "Actual Rows": 0,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 3,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "ModifyTable",
+          "Operation": "Update",
+          "Relation Name": "race_players",
+          "Subplan Name": "CTE updated",
+          "Actual Total Time": 1.172,
+          "Actual Rows": 20,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 151,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 3
+        },
+        {
+          "Node Type": "ModifyTable",
+          "Operation": "Insert",
+          "Relation Name": "race_players",
+          "Subplan Name": "CTE created",
+          "Actual Total Time": 0.006,
+          "Actual Rows": 0,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 0,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "ModifyTable",
+          "Operation": "Insert",
+          "Relation Name": "race_answers",
+          "Subplan Name": "CTE answers",
+          "Actual Total Time": 0.109,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 5,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 3
+        },
+        {
+          "Node Type": "ModifyTable",
+          "Operation": "Insert",
+          "Relation Name": "command_receipts",
+          "Subplan Name": "CTE receipts",
+          "Actual Total Time": 0.07,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 5,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 3
+        }
+      ]
+    },
+    {
+      "planningMs": 0.462,
+      "executionMs": 2.211,
+      "jit": null,
+      "triggers": [
+        {
+          "Trigger Name": "RI_ConstraintTrigger_c_29828",
+          "Constraint Name": "race_answers_room_code_player_id_fkey",
+          "Relation": "race_answers",
+          "Time": 0.078,
+          "Calls": 1
+        },
+        {
+          "Trigger Name": "RI_ConstraintTrigger_c_29833",
+          "Constraint Name": "race_answers_room_code_question_id_fkey",
+          "Relation": "race_answers",
+          "Time": 0.045,
+          "Calls": 1
+        },
+        {
+          "Trigger Name": "RI_ConstraintTrigger_c_29846",
+          "Constraint Name": "command_receipts_room_code_fkey",
+          "Relation": "command_receipts",
+          "Time": 0.033,
+          "Calls": 1
+        }
+      ],
+      "nodes": [
+        {
+          "Node Type": "ModifyTable",
+          "Operation": "Update",
+          "Relation Name": "race_sessions",
+          "Subplan Name": "CTE saved",
+          "Actual Total Time": 0.473,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 17,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "ModifyTable",
+          "Operation": "Delete",
+          "Relation Name": "race_players",
+          "Subplan Name": "CTE removed",
+          "Actual Total Time": 0.031,
+          "Actual Rows": 0,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 6,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "ModifyTable",
+          "Operation": "Update",
+          "Relation Name": "race_players",
+          "Subplan Name": "CTE updated",
+          "Actual Total Time": 1.094,
+          "Actual Rows": 20,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 170,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 2
+        },
+        {
+          "Node Type": "ModifyTable",
+          "Operation": "Insert",
+          "Relation Name": "race_players",
+          "Subplan Name": "CTE created",
+          "Actual Total Time": 0.004,
+          "Actual Rows": 0,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 0,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "ModifyTable",
+          "Operation": "Insert",
+          "Relation Name": "race_answers",
+          "Subplan Name": "CTE answers",
+          "Actual Total Time": 0.052,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 5,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "ModifyTable",
+          "Operation": "Insert",
+          "Relation Name": "command_receipts",
+          "Subplan Name": "CTE receipts",
+          "Actual Total Time": 0.033,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 5,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        }
+      ]
+    },
+    {
+      "planningMs": 0.537,
+      "executionMs": 2.336,
+      "jit": null,
+      "triggers": [
+        {
+          "Trigger Name": "RI_ConstraintTrigger_c_29828",
+          "Constraint Name": "race_answers_room_code_player_id_fkey",
+          "Relation": "race_answers",
+          "Time": 0.071,
+          "Calls": 1
+        },
+        {
+          "Trigger Name": "RI_ConstraintTrigger_c_29833",
+          "Constraint Name": "race_answers_room_code_question_id_fkey",
+          "Relation": "race_answers",
+          "Time": 0.04,
+          "Calls": 1
+        },
+        {
+          "Trigger Name": "RI_ConstraintTrigger_c_29846",
+          "Constraint Name": "command_receipts_room_code_fkey",
+          "Relation": "command_receipts",
+          "Time": 0.029,
+          "Calls": 1
+        }
+      ],
+      "nodes": [
+        {
+          "Node Type": "ModifyTable",
+          "Operation": "Update",
+          "Relation Name": "race_sessions",
+          "Subplan Name": "CTE saved",
+          "Actual Total Time": 0.581,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 19,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 1
+        },
+        {
+          "Node Type": "ModifyTable",
+          "Operation": "Delete",
+          "Relation Name": "race_players",
+          "Subplan Name": "CTE removed",
+          "Actual Total Time": 0.035,
+          "Actual Rows": 0,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 8,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "ModifyTable",
+          "Operation": "Update",
+          "Relation Name": "race_players",
+          "Subplan Name": "CTE updated",
+          "Actual Total Time": 1.223,
+          "Actual Rows": 20,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 172,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 2
+        },
+        {
+          "Node Type": "ModifyTable",
+          "Operation": "Insert",
+          "Relation Name": "race_players",
+          "Subplan Name": "CTE created",
+          "Actual Total Time": 0.005,
+          "Actual Rows": 0,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 0,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "ModifyTable",
+          "Operation": "Insert",
+          "Relation Name": "race_answers",
+          "Subplan Name": "CTE answers",
+          "Actual Total Time": 0.055,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 5,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "ModifyTable",
+          "Operation": "Insert",
+          "Relation Name": "command_receipts",
+          "Subplan Name": "CTE receipts",
+          "Actual Total Time": 0.037,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 5,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        }
+      ]
+    },
+    {
+      "planningMs": 0.465,
+      "executionMs": 2.973,
+      "jit": null,
+      "triggers": [
+        {
+          "Trigger Name": "RI_ConstraintTrigger_c_29828",
+          "Constraint Name": "race_answers_room_code_player_id_fkey",
+          "Relation": "race_answers",
+          "Time": 0.188,
+          "Calls": 1
+        },
+        {
+          "Trigger Name": "RI_ConstraintTrigger_c_29833",
+          "Constraint Name": "race_answers_room_code_question_id_fkey",
+          "Relation": "race_answers",
+          "Time": 0.055,
+          "Calls": 1
+        },
+        {
+          "Trigger Name": "RI_ConstraintTrigger_c_29846",
+          "Constraint Name": "command_receipts_room_code_fkey",
+          "Relation": "command_receipts",
+          "Time": 0.064,
+          "Calls": 1
+        }
+      ],
+      "nodes": [
+        {
+          "Node Type": "ModifyTable",
+          "Operation": "Update",
+          "Relation Name": "race_sessions",
+          "Subplan Name": "CTE saved",
+          "Actual Total Time": 0.734,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 23,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 3
+        },
+        {
+          "Node Type": "ModifyTable",
+          "Operation": "Delete",
+          "Relation Name": "race_players",
+          "Subplan Name": "CTE removed",
+          "Actual Total Time": 0.029,
+          "Actual Rows": 0,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 10,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "ModifyTable",
+          "Operation": "Update",
+          "Relation Name": "race_players",
+          "Subplan Name": "CTE updated",
+          "Actual Total Time": 1.335,
+          "Actual Rows": 20,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 174,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 2
+        },
+        {
+          "Node Type": "ModifyTable",
+          "Operation": "Insert",
+          "Relation Name": "race_players",
+          "Subplan Name": "CTE created",
+          "Actual Total Time": 0.005,
+          "Actual Rows": 0,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 0,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "ModifyTable",
+          "Operation": "Insert",
+          "Relation Name": "race_answers",
+          "Subplan Name": "CTE answers",
+          "Actual Total Time": 0.056,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 5,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "ModifyTable",
+          "Operation": "Insert",
+          "Relation Name": "command_receipts",
+          "Subplan Name": "CTE receipts",
+          "Actual Total Time": 0.038,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 5,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        }
+      ]
+    },
+    {
+      "planningMs": 0.511,
+      "executionMs": 2.295,
+      "jit": null,
+      "triggers": [
+        {
+          "Trigger Name": "RI_ConstraintTrigger_c_29828",
+          "Constraint Name": "race_answers_room_code_player_id_fkey",
+          "Relation": "race_answers",
+          "Time": 0.09,
+          "Calls": 1
+        },
+        {
+          "Trigger Name": "RI_ConstraintTrigger_c_29833",
+          "Constraint Name": "race_answers_room_code_question_id_fkey",
+          "Relation": "race_answers",
+          "Time": 0.048,
+          "Calls": 1
+        },
+        {
+          "Trigger Name": "RI_ConstraintTrigger_c_29846",
+          "Constraint Name": "command_receipts_room_code_fkey",
+          "Relation": "command_receipts",
+          "Time": 0.035,
+          "Calls": 1
+        }
+      ],
+      "nodes": [
+        {
+          "Node Type": "ModifyTable",
+          "Operation": "Update",
+          "Relation Name": "race_sessions",
+          "Subplan Name": "CTE saved",
+          "Actual Total Time": 0.501,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 17,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "ModifyTable",
+          "Operation": "Delete",
+          "Relation Name": "race_players",
+          "Subplan Name": "CTE removed",
+          "Actual Total Time": 0.042,
+          "Actual Rows": 0,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 12,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "ModifyTable",
+          "Operation": "Update",
+          "Relation Name": "race_players",
+          "Subplan Name": "CTE updated",
+          "Actual Total Time": 1.152,
+          "Actual Rows": 20,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 176,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 2
+        },
+        {
+          "Node Type": "ModifyTable",
+          "Operation": "Insert",
+          "Relation Name": "race_players",
+          "Subplan Name": "CTE created",
+          "Actual Total Time": 0.005,
+          "Actual Rows": 0,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 0,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "ModifyTable",
+          "Operation": "Insert",
+          "Relation Name": "race_answers",
+          "Subplan Name": "CTE answers",
+          "Actual Total Time": 0.054,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 5,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        },
+        {
+          "Node Type": "ModifyTable",
+          "Operation": "Insert",
+          "Relation Name": "command_receipts",
+          "Subplan Name": "CTE receipts",
+          "Actual Total Time": 0.04,
+          "Actual Rows": 1,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 5,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0
+        }
+      ]
+    }
+  ]
+}

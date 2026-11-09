@@ -1,0 +1,20 @@
+import type { ClassroomStore } from '../classroom/Store';
+import { Room } from '../Room';
+import { StaleCheckpointError, type RoomRecord } from '../storage/contracts';
+/** One durable transaction before command ACK; physics checkpoint at 1 Hz. */
+export class SessionStore {
+ constructor(private store:ClassroomStore){}
+ has(code:string){return !!this.store.db.prepare('SELECT code FROM race_sessions WHERE code=?').get(code);}
+ save(room:Room){this.saveRecord({checkpoint:room.checkpoint(),report:room.report()});}
+ saveRecord(record:RoomRecord,ordered=false){const s=record.checkpoint,db=this.store.db;db.exec('BEGIN IMMEDIATE');try{
+ if(ordered){const prior=db.prepare("SELECT json_extract(checkpoint,'$.sequence') sequence FROM race_sessions WHERE code=?").get(s.code);if(prior&&Number(prior.sequence)>=s.sequence)throw new StaleCheckpointError();}
+ db.prepare(`INSERT INTO race_sessions(code,ownerId,classId,status,createdAt,startedAt,finishedAt,updatedAt,checkpoint,report) VALUES(?,?,?,?,?,?,?,?,?,?) ON CONFLICT(code) DO UPDATE SET status=excluded.status,startedAt=excluded.startedAt,finishedAt=excluded.finishedAt,updatedAt=excluded.updatedAt,checkpoint=excluded.checkpoint,report=excluded.report`).run(s.code,s.ownerId??null,s.classId??null,s.status,s.createdAt,s.startedAt??null,s.finishedAt??null,Date.now(),JSON.stringify(s),JSON.stringify(record.report));
+ const keep=s.players.map(p=>p.id);db.prepare('DELETE FROM race_players WHERE roomCode=?'+(keep.length?' AND playerId NOT IN ('+keep.map(()=>'?').join(',')+')':'')).run(s.code,...keep);
+ const player=db.prepare('INSERT INTO race_players VALUES(?,?,?,?,?) ON CONFLICT(roomCode,playerId) DO UPDATE SET studentId=excluded.studentId,digest=excluded.digest,state=excluded.state'),answer=db.prepare('INSERT INTO race_answers VALUES(?,?,?,?) ON CONFLICT(roomCode,playerId,questionId) DO NOTHING');for(const p of s.players){player.run(s.code,p.id,p.studentId??null,p.digest,JSON.stringify(p));for(const r of p.quiz.results)answer.run(s.code,p.id,r.questionId,JSON.stringify(r));}db.exec('COMMIT');
+ }catch(e){db.exec('ROLLBACK');throw e;}}
+ load(){const rooms:Room[]=[];for(const row of this.store.db.prepare("SELECT code,checkpoint FROM race_sessions WHERE status IN ('ready','running','paused') AND error IS NULL ORDER BY createdAt DESC LIMIT 50").all())try{const room=Room.restore(JSON.parse(String(row.checkpoint)));if(room.expired()){this.store.db.prepare("UPDATE race_sessions SET status='expired' WHERE code=?").run(String(row.code));continue;}room.profiles=room.profiles.map(p=>{try{return {...p,...(room.ownerId&&p.avatarId?{avatarData:'data:image/webp;base64,'+this.store.avatar(room.ownerId,p.avatarId).toString('base64')}:{})};}catch{return {...p,avatarId:null};}});rooms.push(room);this.save(room);}catch{this.store.db.prepare("UPDATE race_sessions SET error='Invalid checkpoint',status='corrupt' WHERE code=?").run(String(row.code));}return rooms;}
+ list(owner:string,classId:string,from:string,to:string){return this.store.db.prepare('SELECT code,classId,status,createdAt,startedAt,finishedAt,updatedAt,error FROM race_sessions WHERE ownerId=? AND (?=\'\' OR classId=?) AND createdAt>=? AND createdAt<=? ORDER BY createdAt DESC LIMIT 200').all(owner,classId,classId,from?Date.parse(from):0,to?Date.parse(to+'T23:59:59.999Z'):8640000000000000);}
+ report(owner:string,code:string){const row=this.store.db.prepare('SELECT report FROM race_sessions WHERE ownerId=? AND code=?').get(owner,code);if(!row)throw new Error('Không có quyền xem lịch sử.');return JSON.parse(String(row.report));}
+ delete(owner:string,code:string){const row=this.store.db.prepare('SELECT status FROM race_sessions WHERE ownerId=? AND code=?').get(owner,code);if(!row||['ready','running','paused'].includes(String(row.status)))throw new Error('Chỉ xóa kết quả đã kết thúc thuộc giáo viên.');this.store.db.prepare('DELETE FROM race_sessions WHERE code=? AND ownerId=?').run(code,owner);}
+ expire(code:string){this.store.db.prepare("UPDATE race_sessions SET status='expired' WHERE code=? AND status!='finished'").run(code);}
+}

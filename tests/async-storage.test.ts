@@ -1,0 +1,33 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {mkdtempSync,rmSync} from 'node:fs';import {tmpdir} from 'node:os';import {join} from 'node:path';import sharp from 'sharp';
+import {ClassroomStore} from '../server/classroom/Store';import {SQLiteStorage} from '../server/storage/SQLiteStorage';import {StaleCheckpointError,type RoomRecord} from '../server/storage/contracts';import {Room} from '../server/Room';import {defaultSet} from '../src/questions/model';
+const snapshot=(room:Room):RoomRecord=>structuredClone({checkpoint:room.checkpoint(),report:room.report()});
+function fixture(){const dir=mkdtempSync(join(tmpdir(),'async-sqlite-')),store=new ClassroomStore(join(dir,'db.sqlite'),join(dir,'avatars')),storage=new SQLiteStorage(store);return {store,storage,close:async()=>{await storage.close();rmSync(dir,{recursive:true,force:true});}};}
+
+test('SQLite async contract preserves teacher hashes, IDs, avatar bytes, room answers/receipts and schema',async()=>{
+ const f=fixture();try{const owner=f.store.createTeacher('async@example.test','async-password-long'),token=await f.storage.teachers.login('async@example.test','async-password-long');assert.equal(await f.storage.teachers.authenticate('teacher_session='+token),owner);
+ const cls=await f.storage.classrooms.saveClass(owner,{name:'Lớp Lá'}),id=await f.storage.classrooms.saveStudent(owner,{classId:cls,fullName:'Nguyễn An',displayName:'An'}),pending=f.storage.classrooms.students(owner,cls);assert.ok(pending instanceof Promise);assert.equal((await pending)[0].id,id);
+ const bytes=await sharp({create:{width:128,height:128,channels:3,background:'pink'}}).png().toBuffer(),avatar=await f.storage.avatars.upload(owner,id,bytes);assert.equal((await f.storage.classrooms.student(owner,id)).avatarId,avatar);assert.equal((await sharp(await f.storage.avatars.read(owner,avatar)).metadata()).width,128);
+ const room=new Room('ABC234',defaultSet,'x'.repeat(43),'teacher');room.ownerId=owner;room.classId=cls;room.profiles=await f.storage.classrooms.profiles(owner,cls,[id]);const auth=room.claim(id,1,'student');room.control('start');const result=room.answer(auth.playerId,'sun','morning');room.student(auth.playerId).receipts=new Map([['answer-0001',{signature:'test',data:result}]]);room.sequence=1;await f.storage.rooms.save(snapshot(room));
+ assert.equal((await f.storage.rooms.report(owner,room.code)).players[0].correct,1);assert.equal((await f.storage.rooms.list(owner,cls,'','')).length,1);const loaded=await f.storage.rooms.loadActive();const encoded=JSON.stringify(loaded);assert.ok(encoded.includes('answer-0001'));assert.ok(!encoded.includes(auth.token));assert.ok(!encoded.includes('avatarData'));assert.equal(f.store.db.prepare('PRAGMA user_version').get()!.user_version,2);assert.equal(f.store.db.prepare('SELECT COUNT(*) n FROM race_answers').get()!.n,1);
+ await f.storage.teachers.logout('teacher_session='+token);assert.equal(await f.storage.teachers.authenticate('teacher_session='+token),null);
+ }finally{await f.close();}
+});
+test('adapter refuses stale/equal checkpoint version atomically, preserving the newest report',async()=>{
+ const f=fixture();try{const room=new Room('ABC234',defaultSet,'x'.repeat(43),'teacher');room.sequence=1;await f.storage.rooms.save(snapshot(room));const stale=snapshot(room);room.sequence=3;room.elapsed=8;await f.storage.rooms.save(snapshot(room));await assert.rejects(f.storage.rooms.save(stale),StaleCheckpointError);await assert.rejects(f.storage.rooms.save(snapshot(room)),StaleCheckpointError);const current=JSON.parse(String(f.store.db.prepare('SELECT checkpoint FROM race_sessions').get()!.checkpoint));assert.equal(current.sequence,3);assert.equal(current.elapsed,8);
+ }finally{await f.close();}
+});
+test('answer write failure rolls back checkpoint, player state, answer and receipt in one transaction',async()=>{
+ const f=fixture();try{const room=new Room('ABC234',defaultSet,'x'.repeat(43),'teacher'),auth=room.join('An',1,'student');room.control('start');room.sequence=1;await f.storage.rooms.save(snapshot(room));const before=f.store.db.prepare('SELECT checkpoint,report FROM race_sessions').get();
+ f.store.db.exec("CREATE TRIGGER fail_answer BEFORE INSERT ON race_answers BEGIN SELECT RAISE(ABORT,'injected'); END;");room.answer(auth.playerId,'sun','morning');room.student(auth.playerId).receipts=new Map([['receipt-failed',{signature:'x',data:{}}]]);room.sequence=2;await assert.rejects(f.storage.rooms.save(snapshot(room)));assert.deepEqual(f.store.db.prepare('SELECT checkpoint,report FROM race_sessions').get(),before);assert.equal(f.store.db.prepare('SELECT COUNT(*) n FROM race_answers').get()!.n,0);assert.ok(!String(before!.checkpoint).includes('receipt-failed'));
+ }finally{await f.close();}
+});
+test('roster import keeps invalid-row warnings but rolls back the entire batch on a database failure',async()=>{
+ const f=fixture();try{const owner=f.store.createTeacher('import@example.test','import-password-long'),cls=await f.storage.classrooms.saveClass(owner,{name:'Lá'});const result=await f.storage.classrooms.importStudents(owner,cls,[{fullName:'An',displayName:'An'},{fullName:'',displayName:''}]);assert.equal(result.success,1);assert.equal(result.errors.length,1);
+ f.store.db.exec("CREATE TRIGGER fail_student BEFORE INSERT ON students WHEN NEW.displayName='Fail' BEGIN SELECT RAISE(ABORT,'injected'); END;");await assert.rejects(f.storage.classrooms.importStudents(owner,cls,[{fullName:'Second',displayName:'Second'},{fullName:'Failure',displayName:'Fail'}]));assert.equal((await f.storage.classrooms.students(owner,cls)).length,1);
+ }finally{await f.close();}
+});
+test('Room transaction candidate preserves live clocks/socket identity and isolates mutable state',()=>{
+ const room=new Room('ABC234',defaultSet,'x'.repeat(43),'teacher'),auth=room.join('An',1,'student');room.control('start');const candidate=room.fork();candidate.answer(auth.playerId,'sun','morning');candidate.tick(.05);candidate.student(auth.playerId).receipts=new Map([['answer-0001',{signature:'x',data:{}}]]);candidate.teacher.digest[0]^=255;
+ assert.equal(room.student(auth.playerId).quiz.results.length,0);assert.equal(room.student(auth.playerId).race.boost,0);assert.equal(room.elapsed,0);assert.notDeepEqual(candidate.teacher.digest,room.teacher.digest);assert.equal(candidate.teacher.socketId,room.teacher.socketId);assert.equal(candidate.status,'running');assert.equal(candidate.sequence,room.sequence);
+ room.adopt(candidate);assert.equal(room.student(auth.playerId).quiz.results.length,1);assert.ok(room.student(auth.playerId).race.boost>0);assert.equal(room.elapsed,.05);
+});

@@ -1,0 +1,90 @@
+{
+  "environment": "Local PostgreSQL17 Docker + headless Chromium Vite dev; synthetic photos; one teacher, one mobile viewport and19 sockets",
+  "checksPassed": true,
+  "reactCommits": 79,
+  "reactRenderMs": 851.1999999955297,
+  "phaserUpdateMs": 64.4000000283122,
+  "phaserUpdateFrames": 321,
+  "rafFps": 39.543934933386545,
+  "rafFrameP95": 33.400000000001455,
+  "renderer": {
+    "fps": 40.12639815418571,
+    "frameP95": 28.33000000000029,
+    "updateCpuMs": 336.899999961257,
+    "updateFrames": 1555,
+    "cars": 20,
+    "textures": 89,
+    "avatarTextures": 20,
+    "visibleAvatars": 15
+  },
+  "heapBeforeMiB": 19.238338470458984,
+  "heapAfterMiB": 41.50786209106445,
+  "heapAfterGcMiB": 13.363662719726562,
+  "offlineSeconds": 22,
+  "avatarBindings": 20,
+  "answersAcknowledged": 20,
+  "queue": {
+    "activeRooms": 0,
+    "pending": 0,
+    "maxDepth": 19,
+    "completed": 491,
+    "failed": 0,
+    "rejected": 0,
+    "waitMs": {
+      "samples": 491,
+      "median": 0.020958000000973698,
+      "p95": 168.63799500000005,
+      "p99": 490.6022119999998
+    }
+  },
+  "backend": {
+    "ackProcessingMs": {
+      "samples": 50,
+      "median": 192.5739709999998,
+      "p95": 606.0529590000006,
+      "p99": 665.6924899999995
+    },
+    "saveMs": {
+      "samples": 59,
+      "median": 30.34761299999991,
+      "p95": 48.644139000003634,
+      "p99": 57.59104099999968
+    },
+    "checkpointMs": {
+      "samples": 9,
+      "median": 35.811280000001716,
+      "p95": 49.74950499999977,
+      "p99": 49.74950499999977
+    }
+  },
+  "database": {
+    "queryMs": {
+      "samples": 1193,
+      "median": 0.962641000000076,
+      "p95": 6.39828000000125,
+      "p99": 11.798781999999846
+    },
+    "transactionMs": {
+      "samples": 102,
+      "median": 17.04127499999595,
+      "p95": 46.03811599999972,
+      "p99": 47.66276300000027
+    },
+    "poolWaitMs": {
+      "samples": 102,
+      "median": 0.05813300000045274,
+      "p95": 0.3886980000006588,
+      "p99": 0.6693060000034166
+    },
+    "pool": {
+      "total": 1,
+      "idle": 1,
+      "waiting": 0,
+      "pendingPeak": 15,
+      "max": 4,
+      "dedicatedWriterConnections": 1
+    },
+    "errors": 0,
+    "writerHealthy": true
+  }
+}

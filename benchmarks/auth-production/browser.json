@@ -1,0 +1,21 @@
+{
+  "environment": "Local PG17 + synthetic Auth interception + actual Chromium/Supabase SDK; no hosted Supabase, no SMTP sent",
+  "checks": {
+    "protectedTeacherView": true,
+    "wrongPassword": true,
+    "recoveryRequest": true,
+    "pkceReset": true,
+    "weakPasswordRejected": true,
+    "globalSignout": true,
+    "lostCutoffAckRetryWithoutSecondPasswordChange": true,
+    "sessionReload": true,
+    "refresh": true,
+    "crossTabSignout": true,
+    "crossTabClearsActiveRace": true,
+    "invalidLinkScrubbed": true,
+    "inviteFragmentScrubbed": true,
+    "teacherIdAndClassPreserved": true
+  },
+  "pageErrors": 0,
+  "realSupabase": false
+}

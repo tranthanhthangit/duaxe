@@ -1,0 +1,17 @@
+{
+  "environment": "PostgreSQL17 local Docker; PG_TEST_URL enabled; Node24.22.1",
+  "results": [
+    {
+      "command": "npm run typecheck",
+      "exitCode": 0
+    },
+    {
+      "command": "npm test",
+      "exitCode": 0
+    },
+    {
+      "command": "npm run build",
+      "exitCode": 0
+    }
+  ]
+}

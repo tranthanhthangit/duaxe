@@ -1,0 +1,47 @@
+{
+  "queue": {
+    "activeRooms": 0,
+    "pending": 0,
+    "maxDepth": 1,
+    "completed": 370,
+    "failed": 0,
+    "rejected": 2,
+    "waitMs": {
+      "samples": 370,
+      "median": 0.006186999999954423,
+      "p95": 0.02049899999997251,
+      "p99": 0.052379000000200904
+    }
+  },
+  "environment": "Loopback simulated 20 clients, one Node process, SQLite FULL; forced transport closure on 3 clients; reconnectDelay 100ms",
+  "answerRttMs": {
+    "samples": 60,
+    "median": 59.607001999999966,
+    "p95": 63.76737099999991,
+    "p99": 63.86095300000011
+  },
+  "laneRttMs": {
+    "samples": 200,
+    "median": 64.35180999999966,
+    "p95": 67.40202099999988,
+    "p99": 67.94655299999977
+  },
+  "rankingFrameGapMs": {
+    "samples": 47,
+    "median": 99.88377600000013,
+    "p95": 118.59304300000008,
+    "p99": 120.358248
+  },
+  "firstSimultaneousAnswersToTeacherFrameMs": 119.11512499999992,
+  "disconnects": 3,
+  "unplannedDisconnects": 0,
+  "reconnectMs": {
+    "samples": 3,
+    "median": 114.61137300000064,
+    "p95": 118.7679079999998,
+    "p99": 118.7679079999998
+  },
+  "sentBytesPerSecond": 1327870.4404196646,
+  "receivedBytesPerSecond": 3804.5903961223457,
+  "durationSeconds": 4.5326824189999995
+}

@@ -1,0 +1,22 @@
+[
+  {
+    "command": "test:crash",
+    "signal": "SIGKILL",
+    "exitCode": 0
+  },
+  {
+    "command": "test:persistence",
+    "signal": "SIGTERM",
+    "exitCode": 0
+  },
+  {
+    "command": "test:persistence",
+    "signal": "SIGINT",
+    "exitCode": 0
+  },
+  {
+    "command": "test:readiness-browser",
+    "signal": null,
+    "exitCode": 0
+  }
+]

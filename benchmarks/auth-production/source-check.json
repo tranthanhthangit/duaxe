@@ -1,0 +1,55 @@
+{
+  "baseline": "source hashes captured at start of 9B.2; no Git commits exist",
+  "protectedFileCount": 27,
+  "protectedUnchanged": true,
+  "protectedViolations": [],
+  "modifiedFiles": [
+    ".env.example",
+    "PRODUCTION_IMPLEMENTATION.md",
+    "README.md",
+    "package.json",
+    "scripts/cloud/browser.ts",
+    "scripts/cloud/operator.ts",
+    "scripts/cloud/persistence.ts",
+    "scripts/cloud/preflight.ts",
+    "server/app.ts",
+    "server/classroom/api.ts",
+    "server/cloud/TeacherAuth.ts",
+    "server/storage/contracts.ts",
+    "server/storage/factory.ts",
+    "server/storage/postgres/Database.ts",
+    "server/storage/postgres/importer.ts",
+    "server/storage/postgres/migrate.ts",
+    "src/classroom/ClassroomPanel.tsx",
+    "src/classroom/auth.ts",
+    "src/online/useRoom.ts",
+    "tests/cloud-integration.test.ts",
+    "tests/helpers/supabase.ts",
+    "tsconfig.tsbuildinfo"
+  ],
+  "newSourceOrDocumentation": [
+    "SUPABASE_AUTH_PRODUCTION_MIGRATION.md",
+    "scripts/cloud/auth-browser.ts",
+    "scripts/cloud/auth-migration.ts",
+    "scripts/cloud/auth-operator-smoke.ts",
+    "server/cloud/AuthAdmin.ts",
+    "server/cloud/AuthUserStatus.ts",
+    "server/cloud/TeacherMigration.ts",
+    "server/storage/postgres/migrations/003_auth_migration.sql",
+    "src/classroom/TeacherLogin.tsx",
+    "tests/auth-migration.test.ts",
+    "tests/auth-socket.test.ts"
+  ],
+  "removedOriginalFiles": [],
+  "existingBenchmarkFilesUnchanged": true,
+  "clientServerVariableReferences": {
+    "SUPABASE_STORAGE_KEY": [],
+    "SUPABASE_AUTH_ADMIN_KEY": [],
+    "DATABASE_URL": [],
+    "BACKEND_GATEWAY_KEY": []
+  },
+  "clientBuildConfiguration": "synthetic publishable fixture only; this artifact is not a real production release",
+  "generatedBuildMetadata": [
+    "tsconfig.tsbuildinfo"
+  ]
+}

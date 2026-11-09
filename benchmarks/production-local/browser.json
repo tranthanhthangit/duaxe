@@ -1,0 +1,24 @@
+{
+  "environment": "Local PostgreSQL17 + emulated Supabase Auth/Storage + actual browser SDK; Vite proxy, not Cloudflare/Render; synthetic data",
+  "checksPassed": true,
+  "avatarBindings": 20,
+  "answers": 20,
+  "offlineSeconds": 22,
+  "answerRttMs": {
+    "samples": 19,
+    "median": 139.70195700000022,
+    "p95": 318.0073080000002
+  },
+  "fps": 41.0408662242403,
+  "frameP95": 33.400000000001455,
+  "renderer": {
+    "fps": 39.149081660416975,
+    "frameP95": 31.660000000000217,
+    "updateCpuMs": 303.79999997094274,
+    "updateFrames": 1396,
+    "cars": 20,
+    "textures": 89,
+    "avatarTextures": 20,
+    "visibleAvatars": 15
+  }
+}

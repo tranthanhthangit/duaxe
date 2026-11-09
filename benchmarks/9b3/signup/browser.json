@@ -1,0 +1,25 @@
+{
+  "environment": "Local PostgreSQL17 + real React/Supabase SDK/Chromium; Auth and Turnstile emulated, no real SMTP",
+  "checks": {
+    "captchaRequiredBeforeRequest": true,
+    "oneUseCaptchaPassedToProvider": true,
+    "signup": true,
+    "duplicateEmailGeneric": true,
+    "noTeacherBeforeConfirmation": true,
+    "unconfirmedLoginDenied": true,
+    "confirmationCallbackScrubbed": true,
+    "explicitLoginAfterConfirmation": true,
+    "idempotentTeacherId": true,
+    "noAdminApprovalForNewTeacher": true,
+    "crossTenantDenied": true,
+    "reload": true,
+    "usedAndExpiredLinksDenied": true,
+    "resendAnd429": true,
+    "passwordRecovery": true,
+    "recoveryBeforeFirstLoginCreatesProfileWithoutApproval": true,
+    "legacyEmailCannotBeClaimed": true
+  },
+  "pageErrors": 0,
+  "hostedAuthTested": false,
+  "realEmailSent": false
+}

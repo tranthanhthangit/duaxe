@@ -1,0 +1,29 @@
+{
+  "environment": "Node server and 21 Socket.IO clients share one process; payload bytes excluding transport headers",
+  "rows": [
+    {
+      "persistence": false,
+      "players": 20,
+      "seconds": 5.035543550000001,
+      "answerP95Ms": 35.31610699999999,
+      "answerMedianMs": 30.489712999999938,
+      "cpuPercent": 4.863566317483243,
+      "rssMiB": 138.65625,
+      "heapMiB": 31.523208618164062,
+      "sentBytesPerSecond": 1366137.3259297893,
+      "receivedBytesPerSecond": 281.9953766460822
+    },
+    {
+      "persistence": true,
+      "players": 20,
+      "seconds": 5.057827671,
+      "answerP95Ms": 55.77052800000001,
+      "answerMedianMs": 51.20692400000007,
+      "cpuPercent": 5.524901562032678,
+      "rssMiB": 139.7265625,
+      "heapMiB": 33.73155975341797,
+      "sentBytesPerSecond": 1378998.7428774934,
+      "receivedBytesPerSecond": 280.7529422447181
+    }
+  ]
+}

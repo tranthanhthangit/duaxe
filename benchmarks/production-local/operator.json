@@ -1,0 +1,14 @@
+{
+  "environment": "Local PG17/HTTPS emulator only; guarded production command code against isolated test DBs",
+  "schema2": true,
+  "dryRunRollback": true,
+  "importVerified": true,
+  "authIdMappingPreserved": true,
+  "avatarCopyVerified": true,
+  "backupObjects": 1,
+  "actualPgDumpRestore": true,
+  "restoredAvatarAndAuth": true,
+  "rollbackRefusedAfterNewAuthLinks": true,
+  "sourceCopyUnchanged": true,
+  "realCloudTested": false
+}

@@ -1,0 +1,70 @@
+import {monitorEventLoopDelay} from 'node:perf_hooks';
+/** Local PG + real browser/Supabase SDK + emulated Auth/Storage. No hosted service. */
+import {chromium} from 'playwright';
+import {createServer as createVite} from 'vite';
+import react from '@vitejs/plugin-react';
+import {once} from 'node:events';
+import {randomUUID} from 'node:crypto';
+import assert from 'node:assert/strict';
+import {mkdir,writeFile} from 'node:fs/promises';
+import {join} from 'node:path';
+const evidence=process.env.AUTH_BROWSER_OUTPUT??'benchmarks/production-local';
+import sharp from 'sharp';
+import {io,type Socket} from 'socket.io-client';
+import {pgFixture} from '../../tests/helpers/postgres';
+import {mockSupabase} from '../../tests/helpers/supabase';
+import {migratePostgres} from '../../server/storage/postgres/migrate';
+import {PostgresStorage} from '../../server/storage/PostgresStorage';
+import {SupabaseAvatarObjects} from '../../server/cloud/AvatarObjects';
+import {SupabaseTeacherAuth} from '../../server/cloud/TeacherAuth';
+import {authUserStatus} from '../../server/cloud/AuthUserStatus';
+import {RoomInvites} from '../../server/cloud/RoomInvites';
+import {createGameServer} from '../../server/app';
+import type {Storage} from '../../server/storage/contracts';
+import type {Credential,Reply} from '../../shared/protocol';
+
+const f=await pgFixture(),mock=await mockSupabase();await migratePostgres(f.pool,3);
+const teacher=await f.seedTeacher(),uid=randomUUID();await f.pool.query('INSERT INTO duaxe.teacher_auth_links(auth_user_id,teacher_id) VALUES($1,$2)',[uid,teacher.id]);
+const storage=await PostgresStorage.connect(f.config,'',new SupabaseAvatarObjects(mock.origin,mock.bucket,mock.secret)),adapter:Storage=storage;
+const authDurations:number[]=[],authRepo=new SupabaseTeacherAuth(storage.db,mock.issuer,undefined,authUserStatus(mock.origin,mock.secret),true);
+adapter.teachers={bearerOnly:true,login:(e,p)=>authRepo.login(),logout:h=>authRepo.logout(h),authenticate:async(h,options)=>{const at=performance.now();try{return await authRepo.authenticate(h,options);}finally{if(h)authDurations.push(performance.now()-at);}}};adapter.invites=new RoomInvites(storage.db);
+const cls=await storage.classrooms.saveClass(teacher.id,{name:'Lớp cloud giả lập'});await storage.classrooms.importStudents(teacher.id,cls,Array.from({length:20},(_,i)=>({fullName:'Bé '+String(i).padStart(2,'0'),displayName:'Bé '+String(i).padStart(2,'0')})));
+const students=await storage.classrooms.students(teacher.id,cls),image=await sharp({create:{width:128,height:128,channels:3,background:'pink'}}).png().toBuffer();for(const s of students)await storage.avatars.upload(teacher.id,s.id,image);
+const base='http://127.0.0.1:5185',gateway='g'.repeat(43),backend=createGameServer({origins:[base],storage:adapter,deployment:{mode:'pilot',key:gateway}});await backend.ready;backend.http.listen(0,'127.0.0.1');await once(backend.http,'listening');const address=backend.http.address();assert.ok(address&&typeof address==='object');const target='http://127.0.0.1:'+address.port;
+const vite=await createVite({configFile:false,plugins:[react()],define:{'import.meta.env.VITE_AUTH_DRIVER':'"supabase"','import.meta.env.VITE_SUPABASE_URL':'"https://supabase.mock.invalid"','import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY':'"sb_publishable_synthetic"','import.meta.env.VITE_SERVER_URL':'""','import.meta.env.VITE_PUBLIC_APP_URL':'""'},server:{host:'127.0.0.1',port:5185,strictPort:true,proxy:{'/api':{target,headers:{'X-Deployment-Key':gateway}},'/socket.io':{target,ws:true,headers:{'X-Deployment-Key':gateway}}}}});await vite.listen();
+const browser=await chromium.launch({executablePath:'/usr/bin/chromium',headless:true,args:['--no-sandbox','--disable-dev-shm-usage']}),bots:Socket[]=[],errors:string[]=[];
+const ask=<T,>(s:Socket,p:unknown)=>new Promise<T>((r,j)=>s.timeout(10000).emit('request',p,(e:Error|null,v:Reply<T>)=>e||!v.ok?j(e||Error(v.ok?'':v.error)):r(v.data)));
+try{
+ const context=await browser.newContext({viewport:{width:1500,height:1100}}),phoneContext=await browser.newContext({viewport:{width:390,height:844}}),page=await context.newPage(),phone=await phoneContext.newPage();for(const p of [page,phone])p.on('pageerror',e=>errors.push(e.message));
+ await context.route('https://supabase.mock.invalid/**',async route=>{
+  const request=route.request(),headers={'Access-Control-Allow-Origin':base,'Access-Control-Allow-Headers':'*','Content-Type':'application/json'};
+  if(request.method()==='OPTIONS'){await route.fulfill({status:200,headers,body:'{}'});return;}
+  const user={id:uid,email:teacher.email,aud:'authenticated',role:'authenticated',app_metadata:{provider:'email'},user_metadata:{},created_at:new Date().toISOString()};
+  const value=request.url().includes('/token')?{access_token:await mock.token(uid),token_type:'bearer',expires_in:3600,expires_at:Math.floor(Date.now()/1000)+3600,refresh_token:'synthetic-refresh-token',user}:request.url().includes('/user')?user:{};
+  await route.fulfill({status:200,headers,body:JSON.stringify(value)});
+ });
+ await page.goto(base+'/?mode=teacher&fresh=1&profile=1');await page.getByLabel('Email',{exact:true}).fill(teacher.email);await page.getByLabel('Mật khẩu',{exact:true}).fill(teacher.password);await page.getByRole('button',{name:'Đăng nhập',exact:true}).click();await page.getByLabel('1. Chọn lớp').selectOption(cls);await page.locator('.student-card img').nth(19).waitFor();
+ assert.ok((await page.locator('.student-card img').first().getAttribute('src'))?.startsWith('blob:'));
+ await page.getByRole('button',{name:'Chọn 20 bé đầu',exact:true}).click();await page.getByRole('button',{name:'Tạo phòng chơi',exact:true}).click();await page.locator('.room-code').waitFor();await page.waitForFunction(()=>{const value=document.querySelector<HTMLInputElement>('.qr-panel input')?.value;return !!value&&new URL(value).searchParams.has('invite');});
+ const code=await page.locator('.room-code').innerText(),joinUrl=await page.locator('.qr-panel input').inputValue(),invite=new URL(joinUrl).searchParams.get('invite')!;assert.equal(joinUrl.includes('teacherToken'),false);
+ await phone.goto(joinUrl);await phone.locator('.student-grid button').nth(19).waitFor();await phone.locator('.student-grid button').first().click();await phone.getByRole('button',{name:'Xác nhận tham gia',exact:true}).click();await phone.getByText('Chờ cô bắt đầu nhé! 🌱').waitFor();
+ await Promise.all(students.slice(1).map(async(p,i)=>{const s=io(target,{autoConnect:false,transports:['websocket'],auth:{invite},extraHeaders:{'X-Deployment-Key':gateway}});bots.push(s);await new Promise<void>((r,j)=>{s.once('connect',r);s.once('connect_error',j);s.connect();});await ask<Credential>(s,{type:'claim',code,studentId:p.id,color:i});}));
+ await page.locator('.ranking li').nth(19).waitFor();await page.bringToFront();await page.locator('canvas').waitFor();await page.waitForFunction(()=>JSON.parse(document.querySelector<HTMLCanvasElement>('canvas')?.dataset.avatarBindings??'[]').length===20);
+ const bindings=JSON.parse(await page.locator('canvas').getAttribute('data-avatar-bindings')??'[]');assert.equal(bindings.length,20);for(const b of bindings)assert.equal(backend.rooms.get(code)!.student(b.playerId).studentId,b.studentId);
+ await page.getByRole('button',{name:'▶ Bắt đầu',exact:true}).click();await phone.getByRole('button',{name:'A Buổi sáng',exact:true}).click();await phone.getByText('10 điểm',{exact:true}).waitFor();
+ const rtts:number[]=[];await Promise.all(bots.map(async(s,i)=>{const at=performance.now();const request={type:'answer',questionId:'sun',optionId:'morning',commandId:'cloud-browser-'+i};await ask(s,request);rtts.push(performance.now()-at);await ask(s,request);}));
+ await page.evaluate("import('/src/classroom/auth.ts').then(m=>m.authClient.auth.refreshSession()).then(r=>{if(r.error)throw Error('refresh failed')})");
+ await page.getByRole('button',{name:'Ⅱ Tạm dừng',exact:true}).click();await phoneContext.setOffline(true);await phone.waitForTimeout(22000);await phoneContext.setOffline(false);await phone.getByText('● Đã kết nối máy chủ',{exact:true}).waitFor({timeout:30000});await phone.getByText('10 điểm',{exact:true}).waitFor();await page.getByRole('button',{name:'▶ Tiếp tục',exact:true}).click();
+ await page.bringToFront();await page.locator('.stage').scrollIntoViewIfNeeded();
+ const trafficBefore={...backend.traffic},measureAt=performance.now(),cpuBefore=process.cpuUsage(),lag=monitorEventLoopDelay({resolution:10});lag.enable();
+ const metric=await page.evaluate(`new Promise(resolve=>{let start=performance.now(),last=start;const frames=[];function tick(now){frames.push(now-last);last=now;if(now-start<8000)requestAnimationFrame(tick);else{frames.shift();frames.sort((a,b)=>a-b);resolve({fps:1000/(frames.reduce((a,b)=>a+b,0)/frames.length),frameP95:frames[Math.floor(frames.length*.95)],renderer:JSON.parse(document.querySelector('canvas').dataset.performance||'{}')});}}requestAnimationFrame(tick);})`);
+ lag.disable();const cpu=process.cpuUsage(cpuBefore);const measuredWindowMs=performance.now()-measureAt;
+ const cpuPercentOneCore=(cpu.user+cpu.system)/1000/measuredWindowMs*100;
+ const eventLoopDelayMs={mean:lag.mean/1e6,p95:lag.percentile(95)/1e6,p99:lag.percentile(99)/1e6,max:lag.max/1e6};
+ const componentProfile=await page.evaluate(()=>({react:window.__reactProfile,heapBytes:(performance as Performance&{memory?:{usedJSHeapSize:number}}).memory?.usedJSHeapSize}));
+ const trafficWindowSeconds=(performance.now()-measureAt)/1000,measuredTraffic={sent:(backend.traffic.sentBytes-trafficBefore.sentBytes)/trafficWindowSeconds,received:(backend.traffic.receivedBytes-trafficBefore.receivedBytes)/trafficWindowSeconds};
+ assert.equal((await f.pool.query('SELECT count(*) n FROM duaxe.race_answers')).rows[0].n,'20');assert.equal(await phone.locator('canvas').count(),0);assert.equal(await phone.evaluate(()=>performance.getEntriesByType('resource').some(r=>/RaceScene|phaser|RemoteTrack/.test(r.name))),false);
+ await mkdir(evidence,{recursive:true});await page.locator('.stage').screenshot({path:join(evidence,'cloud-race.png')});await page.getByRole('button',{name:'■ Kết thúc',exact:true}).click();await page.getByRole('heading',{name:'Tổng kết cuộc đua'}).waitFor();assert.equal(JSON.stringify(backend.rooms.get(code)!.report()).includes('base64'),false);
+ await page.goto(base+'/?mode=teacher&fresh=1');await page.getByText('Lịch sử trò chơi',{exact:true}).click();await page.getByRole('button',{name:'Xem kết quả',exact:true}).click();await page.getByRole('button',{name:'Xuất lịch sử JSON',exact:true}).waitFor();await page.getByRole('button',{name:'Đăng xuất',exact:true}).click();await page.getByRole('button',{name:'Đăng nhập',exact:true}).waitFor();assert.deepEqual(errors,[]);
+ const summary=(v:number[])=>{const a=[...v].sort((a,b)=>a-b);return {samples:a.length,median:a[Math.floor(a.length/2)],p95:a[Math.min(a.length-1,Math.ceil(a.length*.95)-1)],p99:a[Math.min(a.length-1,Math.ceil(a.length*.99)-1)]};};rtts.sort((a,b)=>a-b);await writeFile(join(evidence,'browser.json'),JSON.stringify({environment:'Local PostgreSQL17 + emulated Supabase Auth/Storage + actual browser SDK; Vite proxy, not Cloudflare/Render; synthetic data',checksPassed:true,avatarBindings:20,answers:20,offlineSeconds:22,answerRttMs:{samples:rtts.length,median:rtts[Math.floor(rtts.length/2)],p95:rtts[Math.ceil(rtts.length*.95)-1],p99:rtts[Math.ceil(rtts.length*.99)-1]},...metric as object,cpuPercentOneCore,eventLoopDelayMs,componentProfile,authVerificationMsEmulatedProvider:summary(authDurations),backendMetrics:backend.metrics(),databaseMetrics:storage.metrics(),networkPayloadBytesPerSecond:measuredTraffic,nodeRssMiBIncludesViteEmulator:process.memoryUsage().rss/1048576},null,2)+'\n');console.log('LOCAL MOCK CONTRACTS COMPLETED: browser SDK, avatars,20 players, offline/resume/history. Hosted Auth/Storage/Cloudflare/Render NOT TESTED.');
+}finally{bots.forEach(s=>s.disconnect());await browser.close();await backend.idle();await backend.close();await vite.close();await storage.close();await f.close();await mock.close();}

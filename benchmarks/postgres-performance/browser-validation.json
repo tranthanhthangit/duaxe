@@ -1,0 +1,10 @@
+[
+  {
+    "command": "npm run benchmark:readiness-network",
+    "exitCode": 0
+  },
+  {
+    "command": "npm run test:postgres-browser",
+    "exitCode": 0
+  }
+]

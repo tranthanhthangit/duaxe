@@ -1,0 +1,298 @@
+{
+  "environment": "Local PostgreSQL17 + emulated Supabase Auth/Storage + actual browser SDK; Vite proxy, not Cloudflare/Render; synthetic data",
+  "checksPassed": true,
+  "avatarBindings": 20,
+  "answers": 20,
+  "offlineSeconds": 22,
+  "answerRttMs": {
+    "samples": 19,
+    "median": 334.68525899999986,
+    "p95": 584.9549310000002,
+    "p99": 584.9549310000002
+  },
+  "fps": 20.664757873770697,
+  "frameP95": 66.70000000000437,
+  "renderer": {
+    "fps": 19.845351788628466,
+    "frameP95": 68.3300000000003,
+    "updateCpuMs": 370.89999999897555,
+    "updateFrames": 786,
+    "cars": 20,
+    "textures": 89,
+    "avatarTextures": 20,
+    "visibleAvatars": 15
+  },
+  "cpuPercentOneCore": 9.434552179206941,
+  "eventLoopDelayMs": {
+    "mean": 11.057430123456792,
+    "p95": 15.163391,
+    "p99": 21.872639,
+    "max": 46.792703
+  },
+  "componentProfile": {
+    "react": {
+      "commits": 399,
+      "totalMs": 9603.800000003073,
+      "maxMs": 99.50000000046566
+    },
+    "heapBytes": 42522762
+  },
+  "authVerificationMsEmulatedProvider": {
+    "samples": 79,
+    "median": 5.162785999999869,
+    "p95": 33.58266200000071,
+    "p99": 46.070011000000704
+  },
+  "backendMetrics": {
+    "ackProcessingMs": {
+      "samples": 66,
+      "median": 205.03945999999996,
+      "p95": 473.7534510000005,
+      "p99": 525.6774089999999
+    },
+    "saveMs": {
+      "samples": 57,
+      "median": 21.565177000000403,
+      "p95": 46.70393100000001,
+      "p99": 53.924739000001864
+    },
+    "checkpointMs": {
+      "samples": 9,
+      "median": 23.354010000002745,
+      "p95": 53.92630300000019,
+      "p99": 53.92630300000019
+    },
+    "requestQueueWaitMs": {
+      "create": {
+        "samples": 1,
+        "median": 0.7349300000005314,
+        "p95": 0.7349300000005314,
+        "p99": 0.7349300000005314
+      },
+      "claim": {
+        "samples": 20,
+        "median": 160.1479020000006,
+        "p95": 347.1581239999996,
+        "p99": 351.38913200000025
+      },
+      "control": {
+        "samples": 4,
+        "median": 0.02108099999895785,
+        "p95": 0.10766100000182632,
+        "p99": 0.10766100000182632
+      },
+      "answer": {
+        "samples": 39,
+        "median": 250.8667519999999,
+        "p95": 491.7443549999989,
+        "p99": 493.9281200000005
+      },
+      "resume": {
+        "samples": 1,
+        "median": 0.01939000000129454,
+        "p95": 0.01939000000129454,
+        "p99": 0.01939000000129454
+      }
+    },
+    "requestAckMs": {
+      "create": {
+        "samples": 1,
+        "median": 95.76485799999955,
+        "p95": 95.76485799999955,
+        "p99": 95.76485799999955
+      },
+      "preview": {
+        "samples": 1,
+        "median": 17.99460200000067,
+        "p95": 17.99460200000067,
+        "p99": 17.99460200000067
+      },
+      "claim": {
+        "samples": 20,
+        "median": 172.69122900000002,
+        "p95": 370.195522,
+        "p99": 384.3342840000005
+      },
+      "control": {
+        "samples": 4,
+        "median": 35.8629329999967,
+        "p95": 68.21039100000053,
+        "p99": 68.21039100000053
+      },
+      "answer": {
+        "samples": 39,
+        "median": 258.19258399999853,
+        "p95": 494.5184129999998,
+        "p99": 525.6774089999999
+      },
+      "resume": {
+        "samples": 1,
+        "median": 29.763599999998405,
+        "p95": 29.763599999998405,
+        "p99": 29.763599999998405
+      }
+    }
+  },
+  "databaseMetrics": {
+    "queryMs": {
+      "samples": 700,
+      "median": 1.5693279999995866,
+      "p95": 12.590423999999985,
+      "p99": 21.403707999999824
+    },
+    "transactionMs": {
+      "samples": 101,
+      "median": 10.484559999997145,
+      "p95": 31.512651999997615,
+      "p99": 43.94356599999992
+    },
+    "poolWaitMs": {
+      "samples": 101,
+      "median": 0.053324000000429805,
+      "p95": 0.18134199999985867,
+      "p99": 0.23484199999984412
+    },
+    "pool": {
+      "total": 2,
+      "idle": 2,
+      "waiting": 0,
+      "pendingPeak": 15,
+      "max": 4,
+      "dedicatedWriterConnections": 1,
+      "busyPeak": 1,
+      "totalPeak": 4
+    },
+    "roomTransactions": {
+      "count": 57,
+      "phases": {
+        "acquireMs": {
+          "samples": 57,
+          "median": 0.09697200000664452,
+          "p95": 0.2014469999994617,
+          "p99": 0.4140709999992396
+        },
+        "beginMs": {
+          "samples": 57,
+          "median": 0.8916479999988951,
+          "p95": 6.909149999999499,
+          "p99": 10.640278999999282
+        },
+        "fenceMs": {
+          "samples": 57,
+          "median": 0,
+          "p95": 0,
+          "p99": 0
+        },
+        "roomLockMs": {
+          "samples": 57,
+          "median": 0,
+          "p95": 0,
+          "p99": 0
+        },
+        "previousReadMs": {
+          "samples": 57,
+          "median": 0,
+          "p95": 0,
+          "p99": 0
+        },
+        "duplicateQueryMs": {
+          "samples": 57,
+          "median": 0,
+          "p95": 0,
+          "p99": 0
+        },
+        "duplicateCheckMs": {
+          "samples": 57,
+          "median": 0,
+          "p95": 0,
+          "p99": 0
+        },
+        "sessionWriteMs": {
+          "samples": 57,
+          "median": 0,
+          "p95": 0,
+          "p99": 3.2232660000008764
+        },
+        "questionWriteMs": {
+          "samples": 57,
+          "median": 0,
+          "p95": 0,
+          "p99": 3.1994230000000243
+        },
+        "playerWriteMs": {
+          "samples": 57,
+          "median": 0,
+          "p95": 0,
+          "p99": 2.328676999999516
+        },
+        "answerInsertMs": {
+          "samples": 57,
+          "median": 0,
+          "p95": 0,
+          "p99": 0.6234580000000278
+        },
+        "receiptInsertMs": {
+          "samples": 57,
+          "median": 0,
+          "p95": 0,
+          "p99": 0.3777409999993324
+        },
+        "commitMs": {
+          "samples": 57,
+          "median": 3.0013679999992746,
+          "p95": 12.590423999999985,
+          "p99": 15.798493000000235
+        },
+        "otherMs": {
+          "samples": 57,
+          "median": 0,
+          "p95": 0,
+          "p99": 0
+        },
+        "queryExecutionMs": {
+          "samples": 57,
+          "median": 17.51755100000446,
+          "p95": 42.19477200000074,
+          "p99": 46.080485999984376
+        },
+        "totalMs": {
+          "samples": 57,
+          "median": 18.274829000001773,
+          "p95": 42.502918000000136,
+          "p99": 47.78139799999917
+        },
+        "roundTrips": {
+          "samples": 57,
+          "median": 4,
+          "p95": 4,
+          "p99": 11
+        },
+        "lockedReadMs": {
+          "samples": 57,
+          "median": 0,
+          "p95": 0,
+          "p99": 0
+        },
+        "combinedWriteMs": {
+          "samples": 57,
+          "median": 9.346556999998938,
+          "p95": 22.39705900000081,
+          "p99": 31.191701000001558
+        },
+        "fenceRoomLockMs": {
+          "samples": 57,
+          "median": 1.3395219999947585,
+          "p95": 5.095996000003652,
+          "p99": 18.06941200000074
+        }
+      }
+    },
+    "errors": 0,
+    "writerHealthy": true
+  },
+  "networkPayloadBytesPerSecond": {
+    "sent": 2165789.2555560893,
+    "received": 0
+  },
+  "nodeRssMiBIncludesViteEmulator": 450.93359375
+}

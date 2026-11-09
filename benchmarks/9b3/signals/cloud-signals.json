@@ -1,0 +1,34 @@
+{
+  "environment": "Compiled server/index.js NODE_ENV=production; local PostgreSQL17 and HTTPS Auth/Storage emulator; CA verification enabled; fake HTTPS CORS origin. Not hosted Render/Supabase.",
+  "selfSignupFactoryEnabled": true,
+  "signupIdPreservedAcrossRestarts": true,
+  "results": [
+    {
+      "signal": "SIGTERM",
+      "players": 20,
+      "acknowledgedAnswers": 20,
+      "restoredStatus": "paused",
+      "avatarsCorrect": 20,
+      "duplicateReward": false,
+      "rollbackMetres": 0
+    },
+    {
+      "signal": "SIGINT",
+      "players": 20,
+      "acknowledgedAnswers": 20,
+      "restoredStatus": "paused",
+      "avatarsCorrect": 20,
+      "duplicateReward": false,
+      "rollbackMetres": 0
+    },
+    {
+      "signal": "SIGKILL",
+      "players": 20,
+      "acknowledgedAnswers": 20,
+      "restoredStatus": "paused",
+      "avatarsCorrect": 20,
+      "duplicateReward": false,
+      "rollbackMetres": 30.61858968500005
+    }
+  ]
+}
