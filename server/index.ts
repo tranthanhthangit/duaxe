@@ -1,3 +1,4 @@
+import {storageStartupMessage} from './storage/startupError';
 import {deploymentAccess} from './cloud/DeploymentGate';
 import { createStorage } from './storage/factory';
 import { createGameServer } from './app';
@@ -7,7 +8,7 @@ if(!Number.isInteger(port)||port<1||port>65535)throw new Error('PORT không hợ
 if(!origins.length||origins.some(origin=>{try{return new URL(origin).origin!==origin;}catch{return true;}}))throw new Error('CORS_ORIGINS phải chứa các origin đầy đủ, cách nhau bởi dấu phẩy.');
 const access=deploymentAccess(process.env);
 let storage:Awaited<ReturnType<typeof createStorage>>;
-try{storage=await createStorage();}catch{console.error('Không thể khởi tạo storage; kiểm tra cấu hình và quyền writer.');process.exit(1);}
+try{storage=await createStorage();}catch(error){console.error(storageStartupMessage(error));process.exit(1);}
 const server=createGameServer({origins,storage,deployment:access});
 let stopping=false;
 async function shutdown(){
