@@ -1,5 +1,9 @@
 /** Validate public build config; never prints key/credential contents. */
-if(process.env.VITE_AUTH_DRIVER!=='supabase')throw Error('Pages build requires VITE_AUTH_DRIVER=supabase.');
+if(process.env.VITE_AUTH_DRIVER!=='supabase'){
+ const value=process.env.VITE_AUTH_DRIVER;
+ const state=value===undefined?'missing':value===''?'empty':value!==value.trim()?'surrounding whitespace':'unexpected value';
+ throw Error(`Pages build requires VITE_AUTH_DRIVER=supabase (${state} in Node process.env). Check this Pages project's build variables for the deployment environment; runtime bindings and .env files are not loaded by this precheck.`);
+}
 const url=new URL(process.env.VITE_SUPABASE_URL??'');if(url.protocol!=='https:'||url.pathname!=='/'||url.username||url.password||url.search||url.hash||['localhost','127.0.0.1'].includes(url.hostname))throw Error('Expected Supabase HTTPS origin.');
 if(process.env.VITE_SERVER_URL)throw Error('Pages uses same-origin gateway; leave VITE_SERVER_URL empty.');
 const key=process.env.VITE_SUPABASE_PUBLISHABLE_KEY??'';

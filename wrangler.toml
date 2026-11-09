@@ -1,10 +1,16 @@
-# Local/build configuration only. Do not run deploy without project owner approval.
+# Local Pages Functions configuration only.
+# Intentionally omit pages_build_output_dir: that key opts Pages into deploying
+# this file as the source of truth, overriding Dashboard-managed configuration.
+# Production/preview build variables and bindings are managed in the Pages
+# Dashboard. Set its build output directory to dist and ACCESS_MODE to closed
+# in BOTH environments. Keep secrets in Dashboard secret bindings, never here.
+# Do not run deploy without project owner approval.
 name = "duaxe"
-pages_build_output_dir = "dist"
 compatibility_date = "2026-11-01"
 
 [vars]
 ACCESS_MODE = "closed"
 VITE_AUTH_DRIVER = "supabase"
+# No env.production/env.preview overrides: hosted settings stay in the Dashboard.
 # Configure BACKEND_URL, SUPABASE_PUBLIC_ORIGIN and pilot Access settings in Pages.
 # BACKEND_GATEWAY_KEY must be a secret binding, never a VITE_ variable.
