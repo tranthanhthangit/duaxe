@@ -1,4 +1,14 @@
 const hints = {
+ PRIVATE_BUCKET_NETWORK: 'Không nhận được phản hồi Storage: kiểm tra mạng, DNS, TLS hoặc timeout.',
+ PRIVATE_BUCKET_HTTP_400: 'Storage trả HTTP400; kiểm tra project, bucket và key.',
+ PRIVATE_BUCKET_HTTP_401: 'Storage trả HTTP401; kiểm tra key và project tương ứng.',
+ PRIVATE_BUCKET_HTTP_403: 'Storage trả HTTP403; kiểm tra quyền key và chính sách truy cập.',
+ PRIVATE_BUCKET_HTTP_404: 'Storage trả HTTP404; kiểm tra bucket trong đúng project.',
+ PRIVATE_BUCKET_HTTP_5XX: 'Storage trả lỗi máy chủ HTTP5xx; kiểm tra trạng thái dịch vụ.',
+ PRIVATE_BUCKET_HTTP_OTHER: 'Storage trả HTTP không thành công khác; chưa xác minh được bucket.',
+ PRIVATE_BUCKET_PUBLIC: 'Bucket đang public; cần chuyển về private.',
+ PRIVATE_BUCKET_RESPONSE: 'Metadata bucket không phải JSON hợp lệ hoặc thiếu public=false.',
+
  CONFIG: 'Kiểm tra STORAGE_DRIVER, Auth/Storage drivers và deployment gate.',
  TURNSTILE_CONFIG: 'Kiểm tra TURNSTILE_SECRET_KEY, TURNSTILE_EXPECTED_HOSTNAME và HTTPS CORS_ORIGINS.',
  MODULES: 'Không tải được module backend; kiểm tra dependencies và native modules của image.',

@@ -44,6 +44,7 @@ export async function createStorage(env:NodeJS.ProcessEnv=process.env):Promise<S
  if(await canonicalPath(env.PG_AVATAR_DIR)===await canonicalPath(env.CLASSROOM_AVATAR_DIR??'/workspace/duaxe-data/avatars'))throw Error('PG_AVATAR_DIR phải khác thư mục ảnh SQLite nguồn.');
  const {postgresConfig}=await import('./postgres/config');const {PostgresStorage}=await import('./PostgresStorage');stage='POSTGRES_CONFIG';const config=postgresConfig(env);stage='POSTGRES_OPEN';return await PostgresStorage.connect(config,env.PG_AVATAR_DIR);
  }catch(error){
+  if(error instanceof StorageStartupError)throw error;
   if(env.NODE_ENV==='production'||env.TEACHER_AUTH_DRIVER==='supabase'||env.AVATAR_STORAGE_DRIVER==='supabase')throw new StorageStartupError(stage);
   throw error; // Preserve local/legacy adapter error contracts.
  }
