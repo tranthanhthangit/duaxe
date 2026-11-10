@@ -1,4 +1,4 @@
-import {useEffect,useState} from 'react';
+import {useEffect,useRef,useState} from 'react';
 import {api,apiBase,ApiError} from './api';
 import {authClient,cloudAuth,selfSignup,captchaSiteKey,consumeTeacherCallback,teacherToken,requestTeacherRecovery,setTeacherPassword,signupTeacher,resendTeacherConfirmation} from './auth';
 import {AuthChallenge} from './AuthChallenge';
@@ -6,6 +6,8 @@ import {AuthChallenge} from './AuthChallenge';
 /** Reuses the existing classroom panel/form styles; no new route or student Auth. */
 export function TeacherLogin({onLogin}:{onLogin:()=>Promise<void>}){
  const [mode,setMode]=useState<'login'|'activate'|'signup'|'resend'|'forgot'|'reset'|'checking'>('checking'),[email,setEmail]=useState(''),[password,setPassword]=useState(''),[confirm,setConfirm]=useState(''),[fullName,setFullName]=useState(''),[error,setError]=useState(''),[notice,setNotice]=useState(''),[busy,setBusy]=useState(false),[passwordSaved,setPasswordSaved]=useState(false),[captcha,setCaptcha]=useState(''),[challengeAttempt,setChallengeAttempt]=useState(0),[profileChallenge,setProfileChallenge]=useState(false);
+ const feedback=useRef<HTMLParagraphElement>(null);
+ useEffect(()=>{if(error||notice){feedback.current?.focus();feedback.current?.scrollIntoView({block:'nearest'});}},[error,notice]);
  const [confirmEntry]=useState(()=>new URLSearchParams(location.search).get('auth')==='confirm'||/type=(signup|email)/.test(location.hash));
  useEffect(()=>{let active=true;void consumeTeacherCallback().then(v=>{if(active){setMode(v==='reset'?'reset':'login');if(v==='confirmed')setNotice('Email đã được xác nhận. Cô hãy đăng nhập để bắt đầu.');}}).catch(e=>{if(active){setError(e.message);setMode(confirmEntry?'login':'forgot');}});return()=>{active=false;};},[confirmEntry]);
  useEffect(()=>{setCaptcha('');setChallengeAttempt(n=>n+1);if(mode!=='reset'&&mode!=='activate')setProfileChallenge(false);},[mode]);
@@ -32,15 +34,16 @@ export function TeacherLogin({onLogin}:{onLogin:()=>Promise<void>}){
   }catch(e){if(e instanceof ApiError&&e.code==='PROFILE_CAPTCHA_REQUIRED'){if(mode==='reset')setProfileChallenge(true);else{setPassword('');setMode('activate');}setNotice('Vui lòng xác minh thêm để hoàn tất tài khoản.');}else setError((e as Error).message);}finally{setBusy(false);setCaptcha('');setChallengeAttempt(n=>n+1);}
  };
  if(mode==='checking')return <p role="status">Đang kiểm tra phiên giáo viên…</p>;
- return <><h3>{mode==='activate'?'Hoàn tất tài khoản giáo viên':mode==='reset'?'Đặt mật khẩu giáo viên':mode==='forgot'?'Quên mật khẩu':mode==='signup'?'Đăng ký giáo viên':mode==='resend'?'Gửi lại email xác nhận':'Danh sách học sinh · Đăng nhập giáo viên'}</h3><form onSubmit={e=>{e.preventDefault();void submit();}}>
+ return <><h3>{mode==='activate'?'Hoàn tất tài khoản giáo viên':mode==='reset'?'Đặt mật khẩu giáo viên':mode==='forgot'?'Quên mật khẩu':mode==='signup'?'Đăng ký giáo viên':mode==='resend'?'Gửi lại email xác nhận':'Danh sách học sinh · Đăng nhập giáo viên'}</h3>{(error||notice)&&<p ref={feedback} tabIndex={-1} role={error?'alert':'status'}>{error||notice}</p>}<form onSubmit={e=>{e.preventDefault();void submit();}}>
  {mode==='signup'&&<label>Họ và tên<input autoComplete="name" required minLength={2} maxLength={100} value={fullName} onChange={e=>setFullName(e.target.value)}/></label>}
  {mode!=='reset'&&mode!=='activate'&&<label>Email<input type="email" autoComplete="username" required maxLength={150} value={email} onChange={e=>setEmail(e.target.value)}/></label>}
- {(mode==='login'||mode==='reset'||mode==='signup')&&<label>{mode==='reset'?'Mật khẩu mới':'Mật khẩu'}<input type="password" autoComplete={mode==='reset'||mode==='signup'?'new-password':'current-password'} required disabled={mode==='reset'&&passwordSaved} maxLength={200} value={password} onChange={e=>setPassword(e.target.value)}/></label>}
- {(mode==='reset'||mode==='signup')&&<><label>Nhập lại mật khẩu<input type="password" autoComplete="new-password" required disabled={passwordSaved} maxLength={200} value={confirm} onChange={e=>setConfirm(e.target.value)}/></label><small>Từ 12 ký tự, gồm chữ hoa, chữ thường và số. Không chia sẻ mật khẩu.</small></>}
+ {(mode==='login'||mode==='reset'||mode==='signup')&&<label>{mode==='reset'?'Mật khẩu mới':'Mật khẩu'}<input type="password" autoComplete={mode==='reset'||mode==='signup'?'new-password':'current-password'} required disabled={mode==='reset'&&passwordSaved} aria-describedby={mode==='signup'||mode==='reset'?'teacher-password-help':undefined} maxLength={200} value={password} onChange={e=>setPassword(e.target.value)}/></label>}
+ {(mode==='reset'||mode==='signup')&&<small id="teacher-password-help">Từ 12 đến 200 ký tự, gồm chữ hoa, chữ thường và số. Không chia sẻ mật khẩu.</small>}
+ {(mode==='reset'||mode==='signup')&&<><label>Nhập lại mật khẩu<input type="password" autoComplete="new-password" required disabled={passwordSaved} maxLength={200} value={confirm} onChange={e=>setConfirm(e.target.value)}/></label></>}
  {captchaSiteKey&&(mode!=='reset'||profileChallenge)&&<AuthChallenge key={challengeAttempt} onToken={setCaptcha} action={mode==='activate'||profileChallenge?'teacher-profile':'teacher-auth'}/>}
  <button disabled={busy}>{mode==='activate'?'Hoàn tất đăng nhập':mode==='reset'?(passwordSaved?'Hoàn tất đăng xuất':'Lưu mật khẩu'):mode==='signup'?'Tạo tài khoản':mode==='resend'?'Gửi email xác nhận':mode==='forgot'?'Gửi liên kết đặt lại':'Đăng nhập'}</button></form>
  {cloudAuth&&mode==='login'&&<button disabled={busy} onClick={()=>{setError('');setMode('forgot');}}>Quên mật khẩu?</button>}
  {selfSignup&&mode==='login'&&<><button disabled={busy} onClick={()=>{setError('');setMode('signup');}}>Đăng ký giáo viên</button><button disabled={busy} onClick={()=>{setError('');setMode('resend');}}>Gửi lại email xác nhận</button></>}
  {(mode==='forgot'||mode==='signup'||mode==='resend')&&<button disabled={busy} onClick={()=>{setMode('login');setError('');}}>Quay lại đăng nhập</button>}
- <small>{selfSignup?'Giáo viên tự đăng ký và xác nhận email để sử dụng.':'Tài khoản do quản trị viên cấp.'} Hồ sơ được lưu riêng cho từng giáo viên.</small>{notice&&<p role="status">{notice}</p>}{error&&<p role="alert">{error}</p>}</>;
+ <small>{selfSignup?'Giáo viên tự đăng ký và xác nhận email để sử dụng.':'Tài khoản do quản trị viên cấp.'} Hồ sơ được lưu riêng cho từng giáo viên.</small></>;
 }

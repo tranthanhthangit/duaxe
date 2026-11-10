@@ -340,3 +340,27 @@ Danh sách chính xác theo SHA-256 so với đầu phiên nằm trong `source-c
 - [ ] Phê duyệt riêng import tài khoản thật, chuyển ảnh thật, DNS/publish và mở public access.
 
 **Kết luận phạm vi:** code9B.2 và bộ kiểm thử local đã hoàn thiện theo các kết quả ghi trên; cấu hình/acceptance cloud và mở production còn chưa hoàn thành. Dừng trước tất cả thao tác production cần phê duyệt.
+
+## Signup feedback repair — 2026-11-10
+
+The production screenshot confirms the game socket is connected, but does not show
+an Auth signup response. Anonymous `/api/me` 401 is not evidence of signup failure;
+Turnstile iframe console warnings alone do not identify the failing request.
+
+- TeacherLogin now focuses and scrolls feedback into view above the form, and shows
+  password requirements directly below the password field (12–200, upper/lower/digit).
+- Supabase signup errors map to fixed CAPTCHA, SMTP recipient restriction, rate-limit,
+  disabled-signup, weak-password, network and provider-outage hints. Raw provider
+  details are not displayed; duplicate-email outcomes remain generic.
+- ClassroomPanel skips `/me` when cloud Auth has no session; authenticated requests
+  still require backend authorization. No changes to confirmation or profile ownership.
+- Browser regression: `node --import tsx scripts/cloud/signup-feedback-browser.ts`.
+  Real React/Supabase SDK/Chromium with mocked providers, no database/email writes:
+  invalid/mismatched passwords, missing CAPTCHA, CAPTCHA failure, SMTP restriction,
+  rate limits, provider error, confirmation notice, focus/visibility, anonymous `/me`.
+- Validation: TypeScript and frontend/backend build pass; full test suite 78 pass,
+  31 skip, 0 fail (PostgreSQL test database unavailable). Browser regression passes.
+- Not verified: real signup, SMTP delivery and email confirmation on production.
+  Need the displayed submit error or sanitized Auth request status/code to identify
+  the remaining hosted configuration blocker. Do not disable CAPTCHA/email confirmation
+  or widen CSP based solely on third-party iframe warnings.

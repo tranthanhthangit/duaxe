@@ -16,7 +16,7 @@ export async function signupTeacher(fullName:string,email:string,password:string
  if(!authClient||!selfSignup||!captchaSiteKey)throw Error('Đăng ký chưa được cấu hình an toàn.');
  const name=fullName.trim().replace(/\s+/g,' ');if(name.length<2||name.length>100||/[\u0000-\u001f\u007f]/.test(name))throw Error('Họ tên cần từ 2 đến 100 ký tự.');validateTeacherPassword(password);
  const {data,error}=await authClient.auth.signUp({email:email.trim(),password,options:{emailRedirectTo:confirmationRedirect(),captchaToken:challenge(captchaToken),data:{full_name:name}}});
- if(error&&!['user_already_exists','email_exists'].includes(error.code??''))throw Error(error.status===429?'Quá nhiều lần đăng ký. Vui lòng chờ rồi thử lại.':'Chưa đăng ký được. Kiểm tra thông tin, xác minh và kết nối.');
+ if(error&&!['user_already_exists','email_exists'].includes(error.code??''))throw Error(signupErrorMessage(error));
  if(data.session){await logoutTeacher();throw Error('Dịch vụ chưa bật xác nhận email bắt buộc. Đăng ký tạm dừng.');}
 }
 export async function resendTeacherConfirmation(email:string,captchaToken:string){
@@ -51,4 +51,16 @@ export async function setTeacherPassword(password:string){
  if(!authClient)throw Error('Auth chưa cấu hình.');
  validateTeacherPassword(password);
  const {error}=await authClient.auth.updateUser({password});if(error)throw Error('Chưa đổi được mật khẩu. Kiểm tra chính sách mật khẩu hoặc yêu cầu liên kết mới.');recovery=Promise.resolve('none');
+}
+
+/** Fixed hints only: never echo provider internals or reveal whether an email exists. */
+export function signupErrorMessage(error:{code?:string;status?:number;name?:string}){
+ if(error.status===429)return 'Quá nhiều yêu cầu gửi email hoặc đăng ký. Vui lòng chờ rồi thử lại.';
+ if(error.code==='captcha_failed')return 'Xác minh chống tự động chưa hợp lệ hoặc đã hết hạn. Hãy xác minh lại rồi gửi.';
+ if(error.code==='signup_disabled'||error.code==='email_provider_disabled')return 'Dịch vụ chưa bật đăng ký bằng email. Cần kiểm tra cấu hình Supabase Auth.';
+ if(error.code==='email_address_not_authorized')return 'Dịch vụ email chưa cho phép gửi đến địa chỉ này. Cần cấu hình SMTP cho Supabase Auth.';
+ if(error.code==='weak_password')return 'Mật khẩu chưa đạt yêu cầu bảo mật. Dùng 12–200 ký tự, có chữ hoa, chữ thường và số.';
+ if(error.status&&error.status>=500)return 'Dịch vụ đăng ký hoặc gửi email đang gặp lỗi. Cần kiểm tra Auth logs và cấu hình SMTP.';
+ if(error.name==='AuthRetryableFetchError'||error.status===0)return 'Không kết nối được dịch vụ đăng ký. Kiểm tra mạng và thử lại.';
+ return 'Chưa đăng ký được. Kiểm tra thông tin, xác minh và kết nối.';
 }

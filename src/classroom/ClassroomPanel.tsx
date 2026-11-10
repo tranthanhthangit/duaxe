@@ -1,5 +1,5 @@
 import {TeacherLogin} from './TeacherLogin';
-import {authClient} from './auth';
+import {authClient,cloudAuth,teacherToken} from './auth';
 import { GameHistory } from './GameHistory';
 import { useEffect, useState } from 'react';
 import type { ImportRow, SchoolClass, Student } from '../../shared/classroom';
@@ -15,7 +15,7 @@ export function ClassroomPanel({onSelect,onAuthenticated,onResume}:{onResume:(co
  const refresh=async()=>{const c=await api<SchoolClass[]>('/classes');setClasses(c);if(classId&&c.some(v=>v.id===classId))setStudents(await api<Student[]>('/classes/'+classId+'/students'));else{setClassId('');setStudents([]);}};
  const run=async(fn:()=>Promise<void>)=>{setError('');setBusy(true);try{await fn();}catch(e){setError((e as Error).message);if((e as Error).message.includes('đăng nhập')){setLogged(false);setClassId('');setSelected([]);setStudents([]);}}finally{setBusy(false);}};
  useEffect(()=>{const listener=authClient?.auth.onAuthStateChange(event=>{if(event==='SIGNED_OUT'){setLogged(false);setClasses([]);setStudents([]);setClassId('');setSelected([]);}});return()=>listener?.data.subscription.unsubscribe();},[]);
- useEffect(()=>{if(recoveryEntry)return;void api('/me').then(()=>{setLogged(true);return api<SchoolClass[]>('/classes');}).then(setClasses).catch(()=>{});},[]);
+ useEffect(()=>{if(recoveryEntry)return;void (async()=>{if(cloudAuth&&!await teacherToken())return false;await api('/me');return true;})().then(async loggedIn=>{if(!loggedIn)return;setLogged(true);setClasses(await api<SchoolClass[]>('/classes'));}).catch(()=>{});},[]);
  useEffect(()=>{setSelected([]);setPreview(null);setStudents([]);if(classId)void api<Student[]>('/classes/'+classId+'/students').then(setStudents).catch(e=>setError(e.message));},[classId]);
  useEffect(()=>{const valid=selected.filter(id=>students.some(s=>s.id===id&&s.status==='active'));onSelect(classId,valid);},[classId,selected,students,onSelect]);
  const current=classes.find(c=>c.id===classId);
