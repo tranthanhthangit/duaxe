@@ -1,4 +1,4 @@
-import {StorageStartupError} from '../storage/startupError';
+import {StorageStartupError,bucketNetworkStage} from '../storage/startupError';
 import {mkdir,readFile,writeFile,rename,unlink} from 'node:fs/promises';
 import {join} from 'node:path';
 export class MissingAvatarError extends Error {constructor(){super('Không tìm thấy ảnh riêng tư.');}}
@@ -12,13 +12,13 @@ export class LocalAvatarObjects implements AvatarObjects {
 /** No public or permanent signed URLs. Backend proxy enforces owner/room access. */
 export class SupabaseAvatarObjects implements AvatarObjects {
  constructor(private origin:string,private bucket:string,private secret:string,private request:typeof fetch=fetch){}
- private async call(path:string,init:RequestInit={}){
-  try{return await this.request(this.origin+'/storage/v1/'+path,{...init,headers:{apikey:this.secret,Authorization:'Bearer '+this.secret,...init.headers},signal:AbortSignal.timeout(8000),redirect:'error'});}catch{throw Error('Không thể truy cập kho ảnh riêng tư.');}
+ private async call(path:string,init:RequestInit={},diagnose=false){
+  try{return await this.request(this.origin+'/storage/v1/'+path,{...init,headers:{apikey:this.secret,Authorization:'Bearer '+this.secret,...init.headers},signal:AbortSignal.timeout(8000),redirect:'error'});}catch(error){if(diagnose)throw new StorageStartupError(bucketNetworkStage(error));throw Error('Không thể truy cập kho ảnh riêng tư.');}
  }
  private path(owner:string,key:string){if(!/^[a-f0-9-]{36}$/i.test(owner)||!/^[-a-f0-9]+\.webp$/.test(key))throw Error('Đường dẫn ảnh không hợp lệ.');return this.bucket+'/'+owner+'/'+key;}
  async verifyPrivate(){
-  let response:Response;
-  try{response=await this.call('bucket/'+this.bucket);}catch{throw new StorageStartupError('PRIVATE_BUCKET_NETWORK');}
+  if(!/^[\x21-\x7e]+$/.test(this.secret))throw new StorageStartupError('PRIVATE_BUCKET_KEY_FORMAT');
+  const response=await this.call('bucket/'+this.bucket,{},true);
   if(!response.ok){
    await response.body?.cancel().catch(()=>{});
    const status=response.status;

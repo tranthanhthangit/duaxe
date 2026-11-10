@@ -1,4 +1,10 @@
 const hints = {
+ PRIVATE_BUCKET_KEY_FORMAT: 'SUPABASE_STORAGE_KEY chứa khoảng trắng, xuống dòng hoặc ký tự không hợp lệ cho header; dán lại key đầy đủ.',
+ PRIVATE_BUCKET_DNS: 'Không phân giải được hostname Supabase; đối chiếu Project URL và DNS/network của Railway.',
+ PRIVATE_BUCKET_TIMEOUT: 'Kết nối Storage quá thời gian; kiểm tra outbound networking và trạng thái Supabase.',
+ PRIVATE_BUCKET_TLS: 'TLS/certificate Storage thất bại; kiểm tra cấu hình CA, không tắt xác minh TLS.',
+ PRIVATE_BUCKET_CONNECTION: 'Kết nối Storage bị từ chối/reset hoặc không có đường mạng; kiểm tra outbound networking.',
+
  PRIVATE_BUCKET_NETWORK: 'Không nhận được phản hồi Storage: kiểm tra mạng, DNS, TLS hoặc timeout.',
  PRIVATE_BUCKET_HTTP_400: 'Storage trả HTTP400; kiểm tra project, bucket và key.',
  PRIVATE_BUCKET_HTTP_401: 'Storage trả HTTP401; kiểm tra key và project tương ứng.',
@@ -27,4 +33,19 @@ export class StorageStartupError extends Error {
 export function storageStartupMessage(error:unknown){
  if(error instanceof StorageStartupError&&Object.hasOwn(hints,error.stage))return `[STORAGE_INIT_${error.stage}] ${hints[error.stage]}`;
  return '[STORAGE_INIT_UNKNOWN] Không thể khởi tạo storage; không ghi nội dung lỗi nhạy cảm.';
+}
+
+/** Inspect only allowlisted error codes; never emit provider messages or causes. */
+export function bucketNetworkStage(error:unknown):StorageStartupStage {
+ const pending:unknown[]=[error],seen=new Set<unknown>();
+ for(let i=0;pending.length&&i<16;i++){
+  const value=pending.shift();if(!value||typeof value!=='object'||seen.has(value))continue;seen.add(value);
+  const e=value as {name?:unknown;code?:unknown;cause?:unknown;errors?:unknown};
+  if(['ENOTFOUND','EAI_AGAIN'].includes(String(e.code)))return 'PRIVATE_BUCKET_DNS';
+  if(['ETIMEDOUT','UND_ERR_CONNECT_TIMEOUT','UND_ERR_HEADERS_TIMEOUT'].includes(String(e.code))||e.name==='TimeoutError'||e.name==='AbortError')return 'PRIVATE_BUCKET_TIMEOUT';
+  if(['CERT_HAS_EXPIRED','DEPTH_ZERO_SELF_SIGNED_CERT','SELF_SIGNED_CERT_IN_CHAIN','UNABLE_TO_VERIFY_LEAF_SIGNATURE','UNABLE_TO_GET_ISSUER_CERT_LOCALLY','ERR_TLS_CERT_ALTNAME_INVALID'].includes(String(e.code)))return 'PRIVATE_BUCKET_TLS';
+  if(['ECONNREFUSED','ECONNRESET','ENETUNREACH','EHOSTUNREACH','UND_ERR_SOCKET'].includes(String(e.code)))return 'PRIVATE_BUCKET_CONNECTION';
+  pending.push(e.cause);if(Array.isArray(e.errors))pending.push(...e.errors.slice(0,8));
+ }
+ return 'PRIVATE_BUCKET_NETWORK';
 }
