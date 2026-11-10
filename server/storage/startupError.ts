@@ -1,4 +1,15 @@
 const hints = {
+ POSTGRES_AUTH: 'PostgreSQL từ chối xác thực; kiểm tra username pooler và mật khẩu tài khoản database.',
+ POSTGRES_PERMISSION: 'PostgreSQL từ chối quyền; kiểm tra role thực tế trong DATABASE_URL.',
+ POSTGRES_ROLE: 'Tài khoản kết nối không đạt yêu cầu duaxe_runtime/NOSUPERUSER/NOBYPASSRLS.',
+ POSTGRES_SCHEMA: 'Thiếu bảng/schema hoặc phiên bản không hợp lệ trong database đang kết nối.',
+ POSTGRES_WRITER: 'Một session khác đang giữ writer lock; không gỡ lock cưỡng bức.',
+ POSTGRES_TLS: 'Xác minh chứng chỉ PostgreSQL thất bại; kiểm tra CA, không tắt TLS verification.',
+ POSTGRES_DNS: 'Không phân giải được hostname PostgreSQL.',
+ POSTGRES_CONNECTION: 'Kết nối PostgreSQL bị từ chối/reset hoặc không có đường mạng.',
+ POSTGRES_TIMEOUT: 'Kết nối PostgreSQL quá thời gian chờ.',
+ POSTGRES_CAPACITY: 'PostgreSQL hết số kết nối cho phép.',
+
  PRIVATE_BUCKET_KEY_FORMAT: 'SUPABASE_STORAGE_KEY chứa khoảng trắng, xuống dòng hoặc ký tự không hợp lệ cho header; dán lại key đầy đủ.',
  PRIVATE_BUCKET_DNS: 'Không phân giải được hostname Supabase; đối chiếu Project URL và DNS/network của Railway.',
  PRIVATE_BUCKET_TIMEOUT: 'Kết nối Storage quá thời gian; kiểm tra outbound networking và trạng thái Supabase.',
@@ -48,4 +59,20 @@ export function bucketNetworkStage(error:unknown):StorageStartupStage {
   pending.push(e.cause);if(Array.isArray(e.errors))pending.push(...e.errors.slice(0,8));
  }
  return 'PRIVATE_BUCKET_NETWORK';
+}
+
+/** DatabaseError has already removed provider messages; emit fixed categories only. */
+export function postgresStartupStage(error:unknown):StorageStartupStage {
+ const e=error as {kind?:unknown;sqlState?:unknown}|null;
+ const kind=e?.kind,code=e?.sqlState;
+ if(kind==='runtime-role')return 'POSTGRES_ROLE';
+ if(kind==='schema-version')return 'POSTGRES_SCHEMA';
+ if(kind==='writer-conflict')return 'POSTGRES_WRITER';
+ if(code==='28P01'||code==='28000')return 'POSTGRES_AUTH';
+ if(code==='42501')return 'POSTGRES_PERMISSION';
+ if(code==='42P01'||code==='3F000')return 'POSTGRES_SCHEMA';
+ if(code==='53300')return 'POSTGRES_CAPACITY';
+ const network=bucketNetworkStage({code});
+ const mapping:Partial<Record<StorageStartupStage,StorageStartupStage>>={PRIVATE_BUCKET_DNS:'POSTGRES_DNS',PRIVATE_BUCKET_TLS:'POSTGRES_TLS',PRIVATE_BUCKET_TIMEOUT:'POSTGRES_TIMEOUT',PRIVATE_BUCKET_CONNECTION:'POSTGRES_CONNECTION'};
+ return mapping[network]??'POSTGRES_OPEN';
 }

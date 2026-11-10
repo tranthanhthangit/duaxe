@@ -1,8 +1,16 @@
+import {bucketNetworkStage} from '../startupError';
 import {Samples} from '../../runtime/Samples';
 import pg,{type PoolClient,type PoolConfig,type QueryResult,type QueryResultRow} from 'pg';
 import {randomUUID,createHash} from 'node:crypto';
 export class DatabaseError extends Error {constructor(public readonly kind:string,public readonly sqlState?:string){super('PostgreSQL không thể hoàn tất thao tác ('+kind+').');}}
-const safe=(e:unknown,kind='query')=>e instanceof DatabaseError?e:new DatabaseError(kind,typeof (e as {code?:unknown})?.code==='string'?String((e as {code:string}).code):undefined);
+const safe=(e:unknown,kind='query')=>{
+ if(e instanceof DatabaseError)return e;
+ const value=e as {code?:unknown;message?:unknown}|null;
+ const network=bucketNetworkStage(e);
+ const codes:Record<string,string>={PRIVATE_BUCKET_DNS:'ENOTFOUND',PRIVATE_BUCKET_TLS:'CERT_HAS_EXPIRED',PRIVATE_BUCKET_TIMEOUT:'ETIMEDOUT',PRIVATE_BUCKET_CONNECTION:'ECONNRESET'};
+ const timeout=['Connection terminated due to connection timeout','timeout exceeded when trying to connect'].includes(String(value?.message));
+ return new DatabaseError(kind,codes[network]??(timeout?'ETIMEDOUT':typeof value?.code==='string'?value.code:undefined));
+};
 export type SQL={lockedRoom?:string;observe?:(phase:string,ms:number)=>void;query:<T extends QueryResultRow=QueryResultRow>(text:string,values?:unknown[])=>Promise<QueryResult<T>>};
 // Fixed operation labels only: SQL text/parameters are never exposed in telemetry.
 const roomPhases=['acquireMs','beginMs','fenceMs','roomLockMs','previousReadMs','duplicateQueryMs','duplicateCheckMs','sessionWriteMs','questionWriteMs','playerWriteMs','answerInsertMs','receiptInsertMs','commitMs','otherMs','queryExecutionMs','totalMs','roundTrips','lockedReadMs','combinedWriteMs','fenceRoomLockMs'];

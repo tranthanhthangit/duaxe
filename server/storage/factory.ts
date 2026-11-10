@@ -1,4 +1,4 @@
-import {StorageStartupError,type StorageStartupStage} from './startupError';
+import {postgresStartupStage,StorageStartupError,type StorageStartupStage} from './startupError';
 import {deploymentAccess} from '../cloud/DeploymentGate';
 import type {Storage} from './contracts';
 import {resolve} from 'node:path';
@@ -45,7 +45,7 @@ export async function createStorage(env:NodeJS.ProcessEnv=process.env):Promise<S
  const {postgresConfig}=await import('./postgres/config');const {PostgresStorage}=await import('./PostgresStorage');stage='POSTGRES_CONFIG';const config=postgresConfig(env);stage='POSTGRES_OPEN';return await PostgresStorage.connect(config,env.PG_AVATAR_DIR);
  }catch(error){
   if(error instanceof StorageStartupError)throw error;
-  if(env.NODE_ENV==='production'||env.TEACHER_AUTH_DRIVER==='supabase'||env.AVATAR_STORAGE_DRIVER==='supabase')throw new StorageStartupError(stage);
+  if(env.NODE_ENV==='production'||env.TEACHER_AUTH_DRIVER==='supabase'||env.AVATAR_STORAGE_DRIVER==='supabase')throw new StorageStartupError(stage==='POSTGRES_OPEN'?postgresStartupStage(error):stage);
   throw error; // Preserve local/legacy adapter error contracts.
  }
 }
