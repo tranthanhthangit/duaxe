@@ -1,4 +1,4 @@
-import {gatewayAllowed,type DeploymentAccess} from './cloud/DeploymentGate';
+import {gatewayGuard,type DeploymentAccess} from './cloud/DeploymentGate';
 import type { ClassroomStore } from './classroom/Store';
 import { SQLiteStorage } from './storage/SQLiteStorage';
 import type { Storage, RoomRecord } from './storage/contracts';
@@ -71,16 +71,17 @@ export function createGameServer(options:{origins:string[];deployment?:Deploymen
   if(removed)expireSockets(removed);
  }
  const api=storage?classroomApi(storage,options.origins,deleteHistory):null;
+ const allowGateway=gatewayGuard(options.deployment);
  const http=createServer((req,res)=>{
   if(req.url==='/health'){const ok=initialized&&!storageFault&&!closing;res.writeHead(ok?200:503,{'Content-Type':'application/json'});res.end(JSON.stringify({ok}));return;}
-  if(!gatewayAllowed(options.deployment,req.headers)){res.writeHead(503,{'Cache-Control':'no-store'});res.end('Application access is closed.');return;}
+  if(!allowGateway(req.headers)){res.writeHead(503,{'Cache-Control':'no-store'});res.end('Application access is closed.');return;}
   if(req.url?.startsWith('/api/')){
    if(!api||closing){res.writeHead(503);res.end();return;}
    void track((async()=>{try{await ready;await api(req,res);}catch{if(!res.headersSent){res.writeHead(503,{'Content-Type':'application/json'});res.end(JSON.stringify({error:faultMessage}));}else res.end();}})());return;
   }
   res.writeHead(404);res.end();
  });
- const io=new Server(http,{cors:{origin:options.origins,credentials:true,methods:['GET','POST']},maxHttpBufferSize:10*1024*1024,perMessageDeflate:false,allowRequest:(req,callback)=>callback(null,gatewayAllowed(options.deployment,req.headers)&&(!req.headers.origin||options.origins.includes(req.headers.origin))),pingInterval:10000,pingTimeout:10000});
+ const io=new Server(http,{cors:{origin:options.origins,credentials:true,methods:['GET','POST']},maxHttpBufferSize:10*1024*1024,perMessageDeflate:false,allowRequest:(req,callback)=>callback(null,allowGateway(req.headers)&&(!req.headers.origin||options.origins.includes(req.headers.origin))),pingInterval:10000,pingTimeout:10000});
  const traffic={sentBytes:0,receivedBytes:0};io.engine.on('connection',connection=>{
   connection.on('packetCreate',(packet:{type:string;data?:string|Buffer})=>{if(packet.type==='message')traffic.sentBytes+=Buffer.byteLength(packet.data??'');});
   connection.on('packet',(packet:{type:string;data?:string|Buffer})=>{if(packet.type==='message')traffic.receivedBytes+=Buffer.byteLength(packet.data??'');});

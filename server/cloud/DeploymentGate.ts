@@ -9,7 +9,23 @@ export function deploymentAccess(env:NodeJS.ProcessEnv):DeploymentAccess|undefin
  if(!['closed','pilot','live'].includes(mode)||!/^[A-Za-z0-9_-]{43,128}$/.test(key))throw Error('Thiếu production gate/key hợp lệ.');
  return {mode:mode as DeploymentAccess['mode'],key};
 }
+export function gatewayDenialReason(access:DeploymentAccess|undefined,headers:IncomingHttpHeaders):'MODE_CLOSED'|'KEY_MISSING'|'KEY_MISMATCH'|undefined {
+ if(!access)return undefined;
+ if(access.mode==='closed')return 'MODE_CLOSED';
+ const supplied=headers['x-deployment-key'];
+ if(typeof supplied!=='string'||!supplied)return 'KEY_MISSING';
+ if(Buffer.byteLength(supplied)!==Buffer.byteLength(access.key)||!timingSafeEqual(Buffer.from(supplied),Buffer.from(access.key)))return 'KEY_MISMATCH';
+ return undefined;
+}
 export function gatewayAllowed(access:DeploymentAccess|undefined,headers:IncomingHttpHeaders){
- if(!access)return true;if(access.mode==='closed')return false;const supplied=headers['x-deployment-key'];
- return typeof supplied==='string'&&Buffer.byteLength(supplied)===Buffer.byteLength(access.key)&&timingSafeEqual(Buffer.from(supplied),Buffer.from(access.key));
+ return gatewayDenialReason(access,headers)===undefined;
+}
+/** Per-server, throttled constant labels only: no headers, URLs or key fingerprints. */
+export function gatewayGuard(access:DeploymentAccess|undefined,log:(message:string)=>void=console.warn,now:()=>number=Date.now){
+ const last=new Map<string,number>();
+ return (headers:IncomingHttpHeaders)=>{
+  const reason=gatewayDenialReason(access,headers);if(!reason)return true;
+  const at=now();if(!last.has(reason)||at-last.get(reason)!>=30000){last.set(reason,at);log('[DEPLOYMENT_GATE_'+reason+']');}
+  return false;
+ };
 }
